@@ -61,8 +61,6 @@ public class StudyFragment extends Fragment implements StudyContract.View {
     public void onResume() {
         super.onResume();
         mPresenter.start();
-        ;
-
     }
 
     @Override
