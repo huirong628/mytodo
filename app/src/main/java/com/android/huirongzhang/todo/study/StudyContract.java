@@ -14,6 +14,8 @@ public interface StudyContract {
 
         void showTasks();
 
+        void showFilteringPopUpMenu();
+
     }
 
     interface Presenter extends BasePresenter {

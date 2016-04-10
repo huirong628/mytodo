@@ -5,4 +5,8 @@
     <string name="work_page_title">Work</string>
     <string name="life_page_title">Life</string>
     <string name="me_page_title">Me</string>
+
+    <string name="title_study_task_add">Add</string>
+    <string name="title_study_task_completed">Completed</string>
+    <string name="title_study_task_delete">Delete</string>
 </resources>

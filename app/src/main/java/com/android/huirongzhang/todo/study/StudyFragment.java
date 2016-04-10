@@ -1,11 +1,17 @@
 package com.android.huirongzhang.todo.study;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.internal.view.menu.MenuPopupHelper;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -13,6 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.huirongzhang.todo.R;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * Created by HuirongZhang on 16/4/9.
@@ -49,6 +58,9 @@ public class StudyFragment extends Fragment implements StudyContract.View {
 
         //set up floating action button
         // FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_tasks);
+
+        setHasOptionsMenu(true);
+
         return root;
     }
 
@@ -61,6 +73,59 @@ public class StudyFragment extends Fragment implements StudyContract.View {
     public void onResume() {
         super.onResume();
         mPresenter.start();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.study_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_study_filter:
+                showFilteringPopUpMenu();
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void showFilteringPopUpMenu() {
+        PopupMenu popup = new PopupMenu(getActivity(), getActivity().findViewById(R.id.menu_study_filter));
+        popup.getMenuInflater().inflate(R.menu.menu_study_filter_tasks, popup.getMenu());
+        setIconEnable(popup);
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_study_task_add:
+                        break;
+                    case R.id.menu_study_task_completed:
+                        break;
+                    case R.id.menu_study_task_delete:
+                        break;
+                    default:
+                        break;
+                }
+                //mPresenter.loadTasks(false);
+                return true;
+            }
+        });
+
+        popup.show();
+    }
+
+    ////使用反射,强制显示菜单图标。
+    private void setIconEnable(PopupMenu menu) {
+        try {
+            Field field = menu.getClass().getDeclaredField("mPopup");
+            field.setAccessible(true);
+            MenuPopupHelper mHelper = (MenuPopupHelper) field.get(menu);
+            mHelper.setForceShowIcon(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
