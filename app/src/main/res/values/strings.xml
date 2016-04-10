@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">todo</string>
+
+    <string name="study_page_title">Study</string>
+    <string name="work_page_title">Work</string>
+    <string name="life_page_title">Life</string>
+    <string name="me_page_title">Me</string>
+</resources>
