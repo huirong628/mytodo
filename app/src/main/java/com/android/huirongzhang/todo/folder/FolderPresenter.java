@@ -2,7 +2,7 @@ package com.android.huirongzhang.todo.folder;
 
 import android.text.TextUtils;
 
-import com.android.huirongzhang.todo.data.folder.Folder;
+import com.android.huirongzhang.todo.provider.folder.Folder;
 
 /**
  * Created by zhanghuirong on 2016/4/11.

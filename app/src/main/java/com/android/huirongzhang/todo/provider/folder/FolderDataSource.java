@@ -1,9 +1,6 @@
-package com.android.huirongzhang.todo.data.folder;
+package com.android.huirongzhang.todo.provider.folder;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
-
-import com.android.huirongzhang.todo.data.local.DBHelper;
+import com.android.huirongzhang.todo.provider.DBHelper;
 import com.android.huirongzhang.todo.data.local.DataSource;
 
 /**
@@ -18,10 +15,10 @@ public class FolderDataSource implements DataSource {
 //        SQLiteDatabase db = mDBHelper.getWritableDatabase();
 //
 //        ContentValues values = new ContentValues();
-//        values.put(FolderPersistenceContract.FolderEntry._ID, folder.getId());
-//        values.put(FolderPersistenceContract.FolderEntry.COLUMN_NAME_TITLE, folder.getTitle());
+//        values.put(FolderContract.FolderEntry._ID, folder.getId());
+//        values.put(FolderContract.FolderEntry.COLUMN_NAME_TITLE, folder.getTitle());
 //
-//        db.insert(FolderPersistenceContract.FolderEntry.TABLE_NAME, null, values);
+//        db.insert(FolderContract.FolderEntry.TABLE_NAME, null, values);
 //
 //        db.close();
 //    }

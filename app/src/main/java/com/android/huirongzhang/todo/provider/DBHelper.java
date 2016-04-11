@@ -1,15 +1,15 @@
-package com.android.huirongzhang.todo.data.local;
+package com.android.huirongzhang.todo.provider;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.android.huirongzhang.todo.data.folder.FolderPersistenceContract;
+import com.android.huirongzhang.todo.provider.folder.FolderContract;
 
 /**
  * Created by zhanghuirong on 2016/4/11.
  */
-public class DBHelper extends SQLiteOpenHelper {
+public final class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Todo.db";//database name
 
@@ -20,9 +20,9 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String BOOLEAN_TYPE = " INTEGER";
 
     private static final String SQL_CREATE_TABLE_FOLDER =
-            "CREATE TABLE " + FolderPersistenceContract.FolderEntry.TABLE_NAME + " (" +
-                    FolderPersistenceContract.FolderEntry._ID + TEXT_TYPE + " PRIMARY KEY," +
-                    FolderPersistenceContract.FolderEntry.COLUMN_NAME_TITLE + TEXT_TYPE +
+            "CREATE TABLE " + FolderContract.FolderEntry.TABLE_NAME + " (" +
+                    FolderContract.FolderEntry._ID + TEXT_TYPE + " PRIMARY KEY," +
+                    FolderContract.FolderEntry.COLUMN_NAME_TITLE + TEXT_TYPE +
                     " )";
 
     public DBHelper(Context context) {
