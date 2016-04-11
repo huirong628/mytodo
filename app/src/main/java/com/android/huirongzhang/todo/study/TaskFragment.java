@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.internal.view.menu.MenuPopupHelper;
 import android.support.v7.widget.PopupMenu;
@@ -16,20 +15,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.huirongzhang.todo.R;
-import com.android.huirongzhang.todo.study.add.AddEditStudyActivity;
+import com.android.huirongzhang.todo.study.add.AddEditActivity;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 /**
  * Created by HuirongZhang on 16/4/9.
  */
-public class StudyFragment extends Fragment implements StudyContract.View {
+public class TaskFragment extends Fragment implements TaskContract.View {
 
-    private StudyContract.Presenter mPresenter;
+    private TaskContract.Presenter mPresenter;
 
     private LinearLayout mTasksView;
 
@@ -101,13 +98,13 @@ public class StudyFragment extends Fragment implements StudyContract.View {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_study_task_add:
-                        mPresenter.setAction(StudyFilterType.STUDY_ADD);
+                        mPresenter.setAction(TaskFilterType.TASK_ADD);
                         break;
                     case R.id.menu_study_task_completed:
-                        mPresenter.setAction(StudyFilterType.STUDY_COMPLETED);
+                        mPresenter.setAction(TaskFilterType.TASK_COMPLETED);
                         break;
                     case R.id.menu_study_task_delete:
-                        mPresenter.setAction(StudyFilterType.STUDY_DELETE);
+                        mPresenter.setAction(TaskFilterType.TASK_DELETE);
                         break;
                     default:
                         break;
@@ -133,7 +130,7 @@ public class StudyFragment extends Fragment implements StudyContract.View {
     }
 
     @Override
-    public void setPresenter(StudyContract.Presenter presenter) {
+    public void setPresenter(TaskContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -150,8 +147,8 @@ public class StudyFragment extends Fragment implements StudyContract.View {
     }
 
     @Override
-    public void showAddStudy() {
-        Intent intent = new Intent(getActivity(), AddEditStudyActivity.class);
-        startActivityForResult(intent, AddEditStudyActivity.REQUEST_ADD_STUDY);
+    public void showAddTask() {
+        Intent intent = new Intent(getActivity(), AddEditActivity.class);
+        startActivityForResult(intent, AddEditActivity.REQUEST_ADD_STUDY);
     }
 }

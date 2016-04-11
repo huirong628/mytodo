@@ -18,12 +18,12 @@ import com.android.huirongzhang.todo.R;
 /**
  * Created by zhanghuirong on 2016/4/11.
  */
-public class AddEditStudyFragment extends Fragment implements AddEditContract.View {
+public class AddEditFragment extends Fragment implements AddEditContract.View {
     private AddEditContract.Presenter mPresenter;
-    private EditText mStudyContent;
+    private EditText mTaskContent;
 
-    public static AddEditStudyFragment newInstance() {
-        return new AddEditStudyFragment();
+    public static AddEditFragment newInstance() {
+        return new AddEditFragment();
     }
 
     @Override
@@ -39,8 +39,8 @@ public class AddEditStudyFragment extends Fragment implements AddEditContract.Vi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.add_edit_study_fragment, container, false);
-        mStudyContent = (EditText) root.findViewById(R.id.study_content);
+        View root = inflater.inflate(R.layout.add_edit_task_fragment, container, false);
+        mTaskContent = (EditText) root.findViewById(R.id.task_content);
         setHasOptionsMenu(true);
         return root;
     }
@@ -114,15 +114,15 @@ public class AddEditStudyFragment extends Fragment implements AddEditContract.Vi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_study_add:
-                mPresenter.addStudyTask(mStudyContent.getText().toString());
+            case R.id.menu_task_add:
+                mPresenter.addTask(mTaskContent.getText().toString());
                 break;
         }
         return true;
     }
 
     @Override
-    public void showStudyList() {
+    public void showTaskList() {
         getActivity().setResult(Activity.RESULT_OK);
         getActivity().finish();
     }

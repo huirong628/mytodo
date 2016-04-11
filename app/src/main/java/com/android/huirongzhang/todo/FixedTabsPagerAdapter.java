@@ -5,10 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.android.huirongzhang.todo.study.StudyContract;
-import com.android.huirongzhang.todo.study.StudyPresenter;
+import com.android.huirongzhang.todo.study.TaskContract;
+import com.android.huirongzhang.todo.study.TaskPresenter;
 import com.android.huirongzhang.todo.work.WorkFragment;
-import com.android.huirongzhang.todo.study.StudyFragment;
+import com.android.huirongzhang.todo.study.TaskFragment;
 import com.android.huirongzhang.todo.life.LifeFragment;
 import com.android.huirongzhang.todo.me.MeFragment;
 
@@ -28,8 +28,8 @@ public class FixedTabsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new StudyFragment();
-                new StudyPresenter().setView((StudyContract.View) fragment);
+                fragment = new TaskFragment();
+                new TaskPresenter().setView((TaskContract.View) fragment);
                 break;
             case 1:
                 fragment = new WorkFragment();

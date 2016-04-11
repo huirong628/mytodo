@@ -3,10 +3,10 @@ package com.android.huirongzhang.todo.study;
 /**
  * Created by zhanghuirong on 2016/4/11.
  */
-public enum StudyFilterType {
+public enum TaskFilterType {
 
-    STUDY_ADD,
-    STUDY_DELETE,
-    STUDY_COMPLETED
+    TASK_ADD,
+    TASK_DELETE,
+    TASK_COMPLETED
 
 }

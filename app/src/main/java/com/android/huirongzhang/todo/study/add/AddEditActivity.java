@@ -10,19 +10,19 @@ import com.android.huirongzhang.todo.R;
 /**
  * Created by zhanghuirong on 2016/4/11.
  */
-public class AddEditStudyActivity extends AppCompatActivity {
+public class AddEditActivity extends AppCompatActivity {
 
     public static final int REQUEST_ADD_STUDY = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_study_task);
+        setContentView(R.layout.activity_add_task);
 
-        AddEditStudyFragment addEditStudyFragment = (AddEditStudyFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        AddEditFragment addEditStudyFragment = (AddEditFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
         if (addEditStudyFragment == null) {
-            addEditStudyFragment = AddEditStudyFragment.newInstance();
+            addEditStudyFragment = AddEditFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), addEditStudyFragment, R.id.contentFrame);
         }
         // Create the presenter

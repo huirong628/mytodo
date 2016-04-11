@@ -6,7 +6,7 @@ import com.android.huirongzhang.todo.BaseView;
 /**
  * Created by HuirongZhang on 16/4/9.
  */
-public interface StudyContract {
+public interface TaskContract {
 
     interface View extends BaseView<Presenter> {
 
@@ -16,13 +16,13 @@ public interface StudyContract {
 
         void showFilteringPopUpMenu();
 
-        void showAddStudy();
+        void showAddTask();
     }
 
     interface Presenter extends BasePresenter {
 
         void loadTasks();
 
-        void setAction(StudyFilterType requestType);
+        void setAction(TaskFilterType requestType);
     }
 }

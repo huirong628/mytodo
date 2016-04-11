@@ -6,7 +6,7 @@ package com.android.huirongzhang.todo.study.add;
 public class AddEditPresenter implements AddEditContract.Presenter {
     private AddEditContract.View mAddEditView;
 
-    public AddEditPresenter(AddEditStudyFragment addEditStudyFragment) {
+    public AddEditPresenter(AddEditFragment addEditStudyFragment) {
         mAddEditView = addEditStudyFragment;
         mAddEditView.setPresenter(this);
     }
@@ -17,8 +17,8 @@ public class AddEditPresenter implements AddEditContract.Presenter {
     }
 
     @Override
-    public void addStudyTask(String description) {
+    public void addTask(String description) {
         //save to DB
-        mAddEditView.showStudyList();// After an edit, go back to the list.
+        mAddEditView.showTaskList();// After an edit, go back to the list.
     }
 }
