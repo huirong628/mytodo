@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.huirongzhang.todo.R;
+import com.android.huirongzhang.todo.study.add.AddEditStudyActivity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -100,10 +101,13 @@ public class StudyFragment extends Fragment implements StudyContract.View {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_study_task_add:
+                        mPresenter.setAction(StudyFilterType.STUDY_ADD);
                         break;
                     case R.id.menu_study_task_completed:
+                        mPresenter.setAction(StudyFilterType.STUDY_COMPLETED);
                         break;
                     case R.id.menu_study_task_delete:
+                        mPresenter.setAction(StudyFilterType.STUDY_DELETE);
                         break;
                     default:
                         break;
@@ -143,5 +147,11 @@ public class StudyFragment extends Fragment implements StudyContract.View {
     public void showTasks() {
         mTasksView.setVisibility(View.VISIBLE);
         mNoTasksVIew.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showAddStudy() {
+        Intent intent = new Intent(getActivity(), AddEditStudyActivity.class);
+        startActivityForResult(intent, AddEditStudyActivity.REQUEST_ADD_STUDY);
     }
 }

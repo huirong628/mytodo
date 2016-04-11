@@ -16,10 +16,13 @@ public interface StudyContract {
 
         void showFilteringPopUpMenu();
 
+        void showAddStudy();
     }
 
     interface Presenter extends BasePresenter {
 
         void loadTasks();
+
+        void setAction(StudyFilterType requestType);
     }
 }

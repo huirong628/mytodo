@@ -25,6 +25,13 @@ public class StudyPresenter implements StudyContract.Presenter {
         processTasks();
     }
 
+    @Override
+    public void setAction(StudyFilterType requestType) {
+        if (requestType == StudyFilterType.STUDY_ADD) {
+            mStudyView.showAddStudy();
+        }
+    }
+
     private void processTasks() {
         if (true) {
             processEmptyTasks();
