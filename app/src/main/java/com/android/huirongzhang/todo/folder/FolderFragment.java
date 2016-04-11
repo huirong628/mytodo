@@ -15,6 +15,8 @@ import android.widget.EditText;
 
 import com.android.huirongzhang.todo.R;
 
+import java.lang.reflect.Field;
+
 /**
  * Created by zhanghuirong on 2016/4/11.
  */
@@ -81,6 +83,7 @@ public class FolderFragment extends Fragment implements FolderContract.View {
                         dialog.dismiss();// to remove the dialog from view,so not use the dialog.cancel();
                     }
                 });
+        builder.setCancelable(false);//Sets the dialog is not cancelable.
         builder.show();
     }
 }
