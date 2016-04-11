@@ -64,7 +64,7 @@ public class FolderFragment extends Fragment implements FolderContract.View {
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_add_folder, null);
-        final EditText foldeName = (EditText) view.findViewById(R.id.folder_name);
+        final EditText folderName = (EditText) view.findViewById(R.id.folder_name);
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(view)
@@ -73,12 +73,12 @@ public class FolderFragment extends Fragment implements FolderContract.View {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // save ...
-                        mPresenter.addFolder(foldeName.getText().toString());//参数:内容
+                        mPresenter.addFolder(folderName.getText().toString());//参数:内容
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();// to remove the dialog from view,os not use the dialog.cancel();
+                        dialog.dismiss();// to remove the dialog from view,so not use the dialog.cancel();
                     }
                 });
         builder.show();
