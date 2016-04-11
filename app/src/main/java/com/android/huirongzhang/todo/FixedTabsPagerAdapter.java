@@ -5,10 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.android.huirongzhang.todo.study.TaskContract;
-import com.android.huirongzhang.todo.study.TaskPresenter;
+import com.android.huirongzhang.todo.task.TaskContract;
+import com.android.huirongzhang.todo.task.TaskPresenter;
 import com.android.huirongzhang.todo.work.WorkFragment;
-import com.android.huirongzhang.todo.study.TaskFragment;
+import com.android.huirongzhang.todo.task.TaskFragment;
 import com.android.huirongzhang.todo.life.LifeFragment;
 import com.android.huirongzhang.todo.me.MeFragment;
 

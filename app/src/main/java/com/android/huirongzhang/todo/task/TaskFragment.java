@@ -1,4 +1,4 @@
-package com.android.huirongzhang.todo.study;
+package com.android.huirongzhang.todo.task;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.android.huirongzhang.todo.R;
-import com.android.huirongzhang.todo.study.add.AddEditActivity;
+import com.android.huirongzhang.todo.task.add.AddEditActivity;
 
 import java.lang.reflect.Field;
 
