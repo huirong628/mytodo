@@ -1,10 +1,10 @@
-package com.android.huirongzhang.todo.provider;
+package com.android.huirongzhang.todo.data.local;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.android.huirongzhang.todo.provider.folder.FolderContract;
+import com.android.huirongzhang.todo.data.local.folder.FolderContract;
 
 /**
  * Created by zhanghuirong on 2016/4/11.
@@ -19,9 +19,12 @@ public final class DBHelper extends SQLiteOpenHelper {
 
     private static final String BOOLEAN_TYPE = " INTEGER";
 
+    private static final String COMMA_SEP = ",";
+
     private static final String SQL_CREATE_TABLE_FOLDER =
             "CREATE TABLE " + FolderContract.FolderEntry.TABLE_NAME + " (" +
                     FolderContract.FolderEntry._ID + TEXT_TYPE + " PRIMARY KEY," +
+                    FolderContract.FolderEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE + COMMA_SEP +
                     FolderContract.FolderEntry.COLUMN_NAME_TITLE + TEXT_TYPE +
                     " )";
 

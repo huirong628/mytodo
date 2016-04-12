@@ -1,4 +1,4 @@
-package com.android.huirongzhang.todo.provider.folder;
+package com.android.huirongzhang.todo.data.local.folder;
 
 import android.provider.BaseColumns;
 
@@ -16,6 +16,7 @@ public final class FolderContract {
     /* Inner class that defines the table contents */
     public static abstract class FolderEntry implements BaseColumns {
         public static final String TABLE_NAME = "folder";
+        public static final String COLUMN_NAME_ENTRY_ID = "entryid";
         public static final String COLUMN_NAME_TITLE = "title";
     }
 }

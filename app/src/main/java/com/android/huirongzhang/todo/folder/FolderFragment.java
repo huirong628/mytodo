@@ -12,10 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.android.huirongzhang.todo.R;
+import com.android.huirongzhang.todo.data.folder.Folder;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhanghuirong on 2016/4/11.
@@ -24,15 +28,23 @@ public class FolderFragment extends Fragment implements FolderContract.View {
 
     private FolderContract.Presenter mPresenter;
 
+    private FolderAdapter mListAdapter;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //初始化adapter
+        mListAdapter = new FolderAdapter(new ArrayList<Folder>(0));
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.folder_fragment, container, false);
+
+        ListView listView = (ListView) root.findViewById(R.id.folder_list);
+        listView.setAdapter(mListAdapter);
+
         setHasOptionsMenu(true);
         return root;
     }
@@ -40,6 +52,12 @@ public class FolderFragment extends Fragment implements FolderContract.View {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
     }
 
     @Override
@@ -59,6 +77,17 @@ public class FolderFragment extends Fragment implements FolderContract.View {
     @Override
     public void setPresenter(FolderContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void showFolderList() {
+        //reresh list
+        mPresenter.loadFolders(false);
+    }
+
+    @Override
+    public void showFolders(List<Folder> folders) {
+        mListAdapter.replaceData(folders);
     }
 
     private void showAddFolderDialog() {

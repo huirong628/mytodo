@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.android.huirongzhang.todo.data.folder.FolderRepository;
+import com.android.huirongzhang.todo.data.local.folder.FolderLocalDataSource;
 import com.android.huirongzhang.todo.folder.FolderContract;
 import com.android.huirongzhang.todo.folder.FolderFragment;
 import com.android.huirongzhang.todo.folder.FolderPresenter;
@@ -32,7 +34,7 @@ public class FixedTabsPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 fragment = new FolderFragment();
-                new FolderPresenter((FolderContract.View) fragment);
+                new FolderPresenter((FolderContract.View) fragment, FolderRepository.getInstance(FolderLocalDataSource.getInstance(mContext)));
                 break;
             case 1:
                 fragment = new WorkFragment();
