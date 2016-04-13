@@ -55,7 +55,7 @@ public class TaskLocalDataSource extends LocalDataSource implements TaskDataSour
                 TaskContract.TaskEntry.COLUMN_NAME_TYPE,
         };
 
-        String selection = folderId + "";
+        String selection = TaskContract.TaskEntry.COLUMN_NAME_TYPE + " = " + folderId;
 
         Cursor c = db.query(
                 TaskContract.TaskEntry.TABLE_NAME, projection, selection, null, null, null, null);
