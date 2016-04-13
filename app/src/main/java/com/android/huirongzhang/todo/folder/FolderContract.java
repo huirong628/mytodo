@@ -16,7 +16,7 @@ public interface FolderContract {
 
         void showFolders(List<Folder> folders);
 
-        void showFolderDetailsUi(String id);
+        void showFolderDetailsUi(int id);
     }
 
     interface Presenter extends BasePresenter {

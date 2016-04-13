@@ -8,31 +8,30 @@ import java.util.UUID;
  * Created by zhanghuirong on 2016/4/13.
  */
 public class Task {
-    private String id;
+    private int id;
     private String content;
-    private String type;
+    private int type;
 
     public Task() {
 
     }
 
-    public Task(@Nullable String content, String type) {
-        this.id = UUID.randomUUID().toString();
+    public Task(@Nullable String content, int type) {
         this.content = content;
         this.type = type;
     }
 
-    public Task(String id, @Nullable String content, String type) {
+    public Task(int id, @Nullable String content, int type) {
         this.id = id;
         this.content = content;
         this.type = type;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -44,11 +43,11 @@ public class Task {
         this.content = content;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 }

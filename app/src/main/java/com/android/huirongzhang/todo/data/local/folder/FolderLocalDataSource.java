@@ -40,7 +40,6 @@ public class FolderLocalDataSource implements FolderDataSource {
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(FolderEntry.COLUMN_NAME_ENTRY_ID, folder.getId());
         values.put(FolderEntry.COLUMN_NAME_TITLE, folder.getTitle());
 
         db.insert(FolderEntry.TABLE_NAME, null, values);
@@ -63,7 +62,7 @@ public class FolderLocalDataSource implements FolderDataSource {
 
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
-                String itemId = c.getString(c.getColumnIndexOrThrow(FolderEntry.COLUMN_NAME_ENTRY_ID));
+                int itemId = c.getInt(c.getColumnIndexOrThrow(FolderEntry.COLUMN_NAME_ENTRY_ID));
                 String title = c.getString(c.getColumnIndexOrThrow(FolderEntry.COLUMN_NAME_TITLE));
                 Folder folder = new Folder(itemId, title);
                 folders.add(folder);

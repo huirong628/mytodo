@@ -31,9 +31,9 @@ public class AddEditActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), addEditStudyFragment, R.id.contentFrame);
 
             if (getIntent().hasExtra(AddEditActivity.EXTRA_FOLDER_ID)) {
-                String folderId = getIntent().getStringExtra(EXTRA_FOLDER_ID);
+                int folderId = getIntent().getIntExtra(EXTRA_FOLDER_ID, 0);
                 Bundle bundle = new Bundle();
-                bundle.putString(AddEditFragment.ARGUMENT_FOLDER_ID, folderId);
+                bundle.putInt(AddEditFragment.ARGUMENT_FOLDER_ID, folderId);
                 addEditStudyFragment.setArguments(bundle);
             } else {
                 //

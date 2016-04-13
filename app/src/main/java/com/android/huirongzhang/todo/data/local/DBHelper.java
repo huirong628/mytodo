@@ -18,21 +18,19 @@ public final class DBHelper extends SQLiteOpenHelper {
 
     private static final String TEXT_TYPE = " TEXT";
 
-    private static final String BOOLEAN_TYPE = " INTEGER";
+    private static final String INTEGER_TYPE = " INTEGER";
 
     private static final String COMMA_SEP = ",";
 
     private static final String SQL_CREATE_TABLE_FOLDER =
             "CREATE TABLE " + FolderContract.FolderEntry.TABLE_NAME + " (" +
-                    FolderContract.FolderEntry._ID + TEXT_TYPE + " PRIMARY KEY," +
-                    FolderContract.FolderEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE + COMMA_SEP +
+                    FolderContract.FolderEntry.COLUMN_NAME_ENTRY_ID + INTEGER_TYPE + " PRIMARY KEY," +
                     FolderContract.FolderEntry.COLUMN_NAME_TITLE + TEXT_TYPE +
                     " )";
 
     private static final String SQL_CREATE_TABLE_TASK =
             "CREATE TABLE " + TaskContract.TaskEntry.TABLE_NAME + " (" +
-                    TaskContract.TaskEntry._ID + TEXT_TYPE + " PRIMARY KEY," +
-                    TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE + COMMA_SEP +
+                    TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + INTEGER_TYPE + " PRIMARY KEY," +
                     TaskContract.TaskEntry.COLUMN_NAME_CONTENT + TEXT_TYPE + COMMA_SEP +
                     TaskContract.TaskEntry.COLUMN_NAME_TYPE + TEXT_TYPE +
                     " )";

@@ -38,7 +38,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
     private View mNoTasksView;
 
-    private String mFolderId;
+    private int mFolderId;
 
     private TaskAdapter mListAdapter;
 
@@ -89,7 +89,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
+        mPresenter.loadTasks(mFolderId);
     }
 
     @Override
@@ -175,7 +175,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
     private void setFolderId() {
         if (getArguments() != null && getArguments().containsKey(ARGUMENT_FOLDER_ID)) {
-            mFolderId = getArguments().getString(ARGUMENT_FOLDER_ID);
+            mFolderId = getArguments().getInt(ARGUMENT_FOLDER_ID);
         }
     }
 }

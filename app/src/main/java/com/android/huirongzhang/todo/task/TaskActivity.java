@@ -34,11 +34,11 @@ public class TaskActivity extends AppCompatActivity {
             taskFragment = TaskFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), taskFragment, R.id.contentFrame);
             if (getIntent().hasExtra(TaskActivity.EXTRA_FOLDER_ID)) {
-                String folderId = getIntent().getStringExtra(EXTRA_FOLDER_ID);
+                int folderId = getIntent().getIntExtra(EXTRA_FOLDER_ID, 0);
                 String title = "工作";
                 actionBar.setTitle(title);
                 Bundle bundle = new Bundle();
-                bundle.putString(TaskFragment.ARGUMENT_FOLDER_ID, folderId);
+                bundle.putInt(TaskFragment.ARGUMENT_FOLDER_ID, folderId);
                 taskFragment.setArguments(bundle);
             } else {
                 actionBar.setTitle("");

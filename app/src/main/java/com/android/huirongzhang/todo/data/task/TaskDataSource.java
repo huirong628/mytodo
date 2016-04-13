@@ -18,5 +18,5 @@ public interface TaskDataSource {
 
     void saveTask(@NonNull Task task);
 
-    void getTasks(LoadTasksCallback callback);
+    void getTasks(LoadTasksCallback callback, int folderId);
 }

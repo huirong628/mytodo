@@ -22,14 +22,14 @@ public class TaskPresenter implements TaskContract.Presenter {
 
     @Override
     public void start() {
-        loadTasks();
+
     }
 
     @Override
-    public void loadTasks() {
+    public void loadTasks(int folderId) {
         // processTasks();
         //loadTasks(forceUpdate || mFirstLoad, true);
-        loadTasks(true);
+        loadTasks(true, folderId);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class TaskPresenter implements TaskContract.Presenter {
         }
     }
 
-    public void loadTasks(boolean forceUpdate) {
+    public void loadTasks(boolean forceUpdate, int folderId) {
         mTaskDataSource.getTasks(new TaskDataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(List<Task> tasks) {
@@ -50,7 +50,7 @@ public class TaskPresenter implements TaskContract.Presenter {
             public void onDataNotAvailable() {
 
             }
-        });
+        }, folderId);
     }
 
     private void processTasks(List<Task> tasks) {

@@ -24,7 +24,7 @@ public class AddEditPresenter implements AddEditContract.Presenter {
     }
 
     @Override
-    public void addTask(String description, String folderId) {
+    public void addTask(String description, int folderId) {
         //save to DB
         Task task = new Task(description, folderId);
         mTaskDataSource.saveTask(task);

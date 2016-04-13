@@ -92,7 +92,7 @@ public class FolderFragment extends Fragment implements FolderContract.View {
     }
 
     @Override
-    public void showFolderDetailsUi(String folderId) {
+    public void showFolderDetailsUi(int folderId) {
         Intent intent = new Intent(getActivity(), TaskActivity.class);
         intent.putExtra(TaskActivity.EXTRA_FOLDER_ID, folderId);
         startActivity(intent);

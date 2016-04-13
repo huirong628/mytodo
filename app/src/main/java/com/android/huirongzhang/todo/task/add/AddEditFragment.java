@@ -25,7 +25,7 @@ public class AddEditFragment extends Fragment implements AddEditContract.View {
 
     private EditText mTaskContent;
 
-    private String mFolderId;
+    private int mFolderId;
 
     public static AddEditFragment newInstance() {
         return new AddEditFragment();
@@ -135,7 +135,7 @@ public class AddEditFragment extends Fragment implements AddEditContract.View {
 
     private void setFolderId() {
         if (getArguments() != null && getArguments().containsKey(ARGUMENT_FOLDER_ID)) {
-            mFolderId = getArguments().getString(ARGUMENT_FOLDER_ID);
+            mFolderId = getArguments().getInt(ARGUMENT_FOLDER_ID);
         }
     }
 }

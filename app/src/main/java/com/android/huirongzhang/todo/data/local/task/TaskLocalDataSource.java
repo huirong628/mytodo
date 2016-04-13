@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 
-import com.android.huirongzhang.todo.data.folder.Folder;
 import com.android.huirongzhang.todo.data.local.LocalDataSource;
 import com.android.huirongzhang.todo.data.task.Task;
 import com.android.huirongzhang.todo.data.task.TaskDataSource;
@@ -37,7 +36,7 @@ public class TaskLocalDataSource extends LocalDataSource implements TaskDataSour
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID, task.getId());
+//        values.put(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID, task.getId());
         values.put(TaskContract.TaskEntry.COLUMN_NAME_CONTENT, task.getContent());
         values.put(TaskContract.TaskEntry.COLUMN_NAME_TYPE, task.getType());
         db.insert(TaskContract.TaskEntry.TABLE_NAME, null, values);
@@ -46,7 +45,7 @@ public class TaskLocalDataSource extends LocalDataSource implements TaskDataSour
     }
 
     @Override
-    public void getTasks(LoadTasksCallback callback) {
+    public void getTasks(LoadTasksCallback callback, int folderId) {
         List<Task> tasks = new ArrayList<Task>();
         SQLiteDatabase db = mDBHelper.getReadableDatabase();
 
@@ -56,14 +55,16 @@ public class TaskLocalDataSource extends LocalDataSource implements TaskDataSour
                 TaskContract.TaskEntry.COLUMN_NAME_TYPE,
         };
 
+        String selection = folderId + "";
+
         Cursor c = db.query(
-                TaskContract.TaskEntry.TABLE_NAME, projection, null, null, null, null, null);
+                TaskContract.TaskEntry.TABLE_NAME, projection, selection, null, null, null, null);
 
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
-                String itemId = c.getString(c.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID));
+                int itemId = c.getInt(c.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID));
                 String content = c.getString(c.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_CONTENT));
-                String type = c.getString(c.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_TYPE));
+                int type = c.getInt(c.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_TYPE));
                 Task task = new Task(itemId, content, type);
                 tasks.add(task);
             }

@@ -9,8 +9,8 @@ import com.android.huirongzhang.todo.data.local.task.TaskLocalDataSource;
  */
 public class TaskRepository implements TaskDataSource {
 
-
     private static TaskRepository INSTANCE = null;
+
     private final TaskDataSource mTaskLocalDataSource;
 
     // Prevent direct instantiation.
@@ -25,14 +25,13 @@ public class TaskRepository implements TaskDataSource {
         return INSTANCE;
     }
 
-
     @Override
     public void saveTask(@NonNull Task task) {
         mTaskLocalDataSource.saveTask(task);
     }
 
     @Override
-    public void getTasks(LoadTasksCallback callback) {
-        mTaskLocalDataSource.getTasks(callback);
+    public void getTasks(LoadTasksCallback callback, int folderId) {
+        mTaskLocalDataSource.getTasks(callback, folderId);
     }
 }

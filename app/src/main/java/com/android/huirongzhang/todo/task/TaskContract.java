@@ -24,7 +24,7 @@ public interface TaskContract {
 
     interface Presenter extends BasePresenter {
 
-        void loadTasks();
+        void loadTasks(int folderId);
 
         void setAction(TaskFilterType requestType);
     }

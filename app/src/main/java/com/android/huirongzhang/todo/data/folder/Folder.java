@@ -8,24 +8,23 @@ import java.util.UUID;
  * Created by zhanghuirong on 2016/4/11.
  */
 public final class Folder {
-    private String id;
+    private int id;
     private String title;
 
     public Folder(@Nullable String title) {
-        this.id = UUID.randomUUID().toString();
         this.title = title;
     }
 
-    public Folder(String id, String title) {
+    public Folder(int id, @Nullable String title) {
         this.id = id;
         this.title = title;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
