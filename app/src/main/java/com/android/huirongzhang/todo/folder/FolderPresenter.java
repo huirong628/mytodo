@@ -45,6 +45,11 @@ public class FolderPresenter implements FolderContract.Presenter {
         mFirstLoad = false;
     }
 
+    @Override
+    public void openFolderDetails(Folder clickedFolder) {
+        mView.showFolderDetailsUi(clickedFolder.getId());
+    }
+
     private void loadFolders(boolean forceUpdate, final boolean showLoadingUI) {
 //        if (showLoadingUI) {
 //            mTasksView.setLoadingIndicator(true);
@@ -81,6 +86,4 @@ public class FolderPresenter implements FolderContract.Presenter {
             // showFilterLabel();
         }
     }
-
-
 }

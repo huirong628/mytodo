@@ -26,11 +26,20 @@ import java.lang.reflect.Field;
  */
 public class TaskFragment extends Fragment implements TaskContract.View {
 
+    public static final String ARGUMENT_FOLDER_ID = "FOLDER_ID";
     private TaskContract.Presenter mPresenter;
 
     private LinearLayout mTasksView;
 
-    private View mNoTasksVIew;
+    private View mNoTasksView;
+
+    public static TaskFragment newInstance() {
+        return new TaskFragment();
+    }
+
+    public TaskFragment() {
+        //
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -45,14 +54,14 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.study_fragment, container, false);
+        View root = inflater.inflate(R.layout.task_fragment, container, false);
 
         //set up tasks view
         ListView listView = (ListView) root.findViewById(R.id.tasks_list);
         mTasksView = (LinearLayout) root.findViewById(R.id.tasks);
 
         //set up no tasks view
-        mNoTasksVIew = root.findViewById(R.id.noTasks);
+        mNoTasksView = root.findViewById(R.id.noTasks);
 
         //set up floating action button
         // FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_tasks);
@@ -75,14 +84,14 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.study_fragment_menu, menu);
+        inflater.inflate(R.menu.task_fragment_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_study_filter:
+            case R.id.menu_task_filter:
                 showFilteringPopUpMenu();
                 break;
         }
@@ -91,7 +100,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
 
     @Override
     public void showFilteringPopUpMenu() {
-        PopupMenu popup = new PopupMenu(getActivity(), getActivity().findViewById(R.id.menu_study_filter));
+        PopupMenu popup = new PopupMenu(getActivity(), getActivity().findViewById(R.id.menu_task_filter));
         popup.getMenuInflater().inflate(R.menu.menu_study_filter_tasks, popup.getMenu());
         setIconEnable(popup);
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -137,13 +146,13 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     @Override
     public void showNoTasks() {
         mTasksView.setVisibility(View.GONE);
-        mNoTasksVIew.setVisibility(View.VISIBLE);
+        mNoTasksView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showTasks() {
         mTasksView.setVisibility(View.VISIBLE);
-        mNoTasksVIew.setVisibility(View.GONE);
+        mNoTasksView.setVisibility(View.GONE);
     }
 
     @Override

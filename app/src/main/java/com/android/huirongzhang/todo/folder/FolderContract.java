@@ -15,11 +15,15 @@ public interface FolderContract {
         void showFolderList();
 
         void showFolders(List<Folder> folders);
+
+        void showFolderDetailsUi(String id);
     }
 
     interface Presenter extends BasePresenter {
         void addFolder(String folderName);
 
         void loadFolders(boolean forceUpdate);
+
+        void openFolderDetails(Folder clickedFolder);
     }
 }

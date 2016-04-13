@@ -72,6 +72,11 @@ public class LifeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     private void generateData() {
         int numValues = 6;
         mChartValue.removeAllViews();
@@ -102,9 +107,9 @@ public class LifeFragment extends Fragment {
         }
 
         data = new PieChartData(values);
-//        data.setHasLabels(hasLabels);
-//        data.setHasLabelsOnlyForSelected(hasLabelForSelected);
-//        data.setHasLabelsOutside(hasLabelsOutside);
+//        data.setHasLabels(true);
+//        data.setHasLabelsOnlyForSelected(true);
+//        data.setHasLabelsOutside(true);
         data.setHasCenterCircle(hasCenterCircle);
 
 //        if (isExploded) {

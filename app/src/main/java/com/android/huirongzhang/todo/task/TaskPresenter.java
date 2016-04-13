@@ -7,7 +7,7 @@ public class TaskPresenter implements TaskContract.Presenter {
 
     private TaskContract.View mTaskView = null;
 
-    public void setView(TaskContract.View taskView) {
+    public TaskPresenter(TaskContract.View taskView) {
         mTaskView = taskView;
         mTaskView.setPresenter(this);
     }
@@ -16,7 +16,6 @@ public class TaskPresenter implements TaskContract.Presenter {
     public void start() {
         loadTasks();
     }
-
 
     @Override
     public void loadTasks() {

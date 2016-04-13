@@ -1,6 +1,7 @@
 package com.android.huirongzhang.todo.folder;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,8 +17,8 @@ import android.widget.ListView;
 
 import com.android.huirongzhang.todo.R;
 import com.android.huirongzhang.todo.data.folder.Folder;
+import com.android.huirongzhang.todo.task.TaskActivity;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class FolderFragment extends Fragment implements FolderContract.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //初始化adapter
-        mListAdapter = new FolderAdapter(new ArrayList<Folder>(0));
+        mListAdapter = new FolderAdapter(new ArrayList<Folder>(0), mItemListener);
     }
 
     @Nullable
@@ -90,6 +91,13 @@ public class FolderFragment extends Fragment implements FolderContract.View {
         mListAdapter.replaceData(folders);
     }
 
+    @Override
+    public void showFolderDetailsUi(String folderId) {
+        Intent intent = new Intent(getActivity(), TaskActivity.class);
+        intent.putExtra(TaskActivity.EXTRA_FOLDER_ID, folderId);
+        startActivity(intent);
+    }
+
     private void showAddFolderDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
@@ -115,4 +123,14 @@ public class FolderFragment extends Fragment implements FolderContract.View {
         builder.setCancelable(false);//Sets the dialog is not cancelable.
         builder.show();
     }
+
+    /**
+     * Listener for clicks on folders in the ListView.
+     */
+    FolderItemListener mItemListener = new FolderItemListener() {
+        @Override
+        public void onFolderClick(Folder clickedFolder) {
+            mPresenter.openFolderDetails(clickedFolder);
+        }
+    };
 }

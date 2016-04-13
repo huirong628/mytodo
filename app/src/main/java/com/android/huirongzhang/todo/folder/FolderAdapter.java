@@ -20,8 +20,11 @@ public class FolderAdapter extends BaseAdapter {
 
     private List<Folder> mFolders;
 
-    public FolderAdapter(ArrayList<Folder> folders) {
+    private FolderItemListener mItemListener;
+
+    public FolderAdapter(ArrayList<Folder> folders, FolderItemListener itemListener) {
         setList(folders);
+        mItemListener = itemListener;
     }
 
     public void replaceData(List<Folder> folders) {
@@ -60,6 +63,13 @@ public class FolderAdapter extends BaseAdapter {
 
         TextView titleTV = (TextView) rowView.findViewById(R.id.folder_name);
         titleTV.setText(folder.getTitle());
+
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mItemListener.onFolderClick(folder);
+            }
+        });
         return rowView;
     }
 }
