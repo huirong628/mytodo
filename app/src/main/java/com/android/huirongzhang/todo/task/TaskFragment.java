@@ -17,9 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.android.huirongzhang.todo.R;
+import com.android.huirongzhang.todo.data.folder.Folder;
+import com.android.huirongzhang.todo.data.task.Task;
 import com.android.huirongzhang.todo.task.add.AddEditActivity;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HuirongZhang on 16/4/9.
@@ -27,11 +31,16 @@ import java.lang.reflect.Field;
 public class TaskFragment extends Fragment implements TaskContract.View {
 
     public static final String ARGUMENT_FOLDER_ID = "FOLDER_ID";
+
     private TaskContract.Presenter mPresenter;
 
     private LinearLayout mTasksView;
 
     private View mNoTasksView;
+
+    private String mFolderId;
+
+    private TaskAdapter mListAdapter;
 
     public static TaskFragment newInstance() {
         return new TaskFragment();
@@ -49,6 +58,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mListAdapter = new TaskAdapter(new ArrayList<Task>(0));
     }
 
     @Nullable
@@ -59,12 +69,9 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         //set up tasks view
         ListView listView = (ListView) root.findViewById(R.id.tasks_list);
         mTasksView = (LinearLayout) root.findViewById(R.id.tasks);
-
+        listView.setAdapter(mListAdapter);
         //set up no tasks view
         mNoTasksView = root.findViewById(R.id.noTasks);
-
-        //set up floating action button
-        // FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_tasks);
 
         setHasOptionsMenu(true);
 
@@ -74,6 +81,9 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //get task type
+        setFolderId();
     }
 
     @Override
@@ -106,7 +116,7 @@ public class TaskFragment extends Fragment implements TaskContract.View {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.menu_study_task_add:
+                    case R.id.menu_folder_task_add:
                         mPresenter.setAction(TaskFilterType.TASK_ADD);
                         break;
                     case R.id.menu_study_task_completed:
@@ -150,14 +160,22 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     }
 
     @Override
-    public void showTasks() {
+    public void showTasks(List<Task> tasks) {
         mTasksView.setVisibility(View.VISIBLE);
         mNoTasksView.setVisibility(View.GONE);
+        mListAdapter.setData(tasks);
     }
 
     @Override
     public void showAddTask() {
         Intent intent = new Intent(getActivity(), AddEditActivity.class);
-        startActivityForResult(intent, AddEditActivity.REQUEST_ADD_STUDY);
+        intent.putExtra(AddEditActivity.EXTRA_FOLDER_ID, mFolderId);
+        startActivityForResult(intent, AddEditActivity.REQUEST_ADD_TASK);
+    }
+
+    private void setFolderId() {
+        if (getArguments() != null && getArguments().containsKey(ARGUMENT_FOLDER_ID)) {
+            mFolderId = getArguments().getString(ARGUMENT_FOLDER_ID);
+        }
     }
 }

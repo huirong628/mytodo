@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.android.huirongzhang.todo.data.local.folder.FolderContract;
+import com.android.huirongzhang.todo.data.local.task.TaskContract;
 
 /**
  * Created by zhanghuirong on 2016/4/11.
@@ -28,6 +29,14 @@ public final class DBHelper extends SQLiteOpenHelper {
                     FolderContract.FolderEntry.COLUMN_NAME_TITLE + TEXT_TYPE +
                     " )";
 
+    private static final String SQL_CREATE_TABLE_TASK =
+            "CREATE TABLE " + TaskContract.TaskEntry.TABLE_NAME + " (" +
+                    TaskContract.TaskEntry._ID + TEXT_TYPE + " PRIMARY KEY," +
+                    TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE + COMMA_SEP +
+                    TaskContract.TaskEntry.COLUMN_NAME_CONTENT + TEXT_TYPE + COMMA_SEP +
+                    TaskContract.TaskEntry.COLUMN_NAME_TYPE + TEXT_TYPE +
+                    " )";
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -35,6 +44,7 @@ public final class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_TABLE_FOLDER);
+        db.execSQL(SQL_CREATE_TABLE_TASK);
     }
 
     @Override

@@ -6,13 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.android.huirongzhang.todo.ActivityUtils;
 import com.android.huirongzhang.todo.R;
+import com.android.huirongzhang.todo.data.local.task.TaskLocalDataSource;
+import com.android.huirongzhang.todo.data.task.TaskRepository;
+import com.android.huirongzhang.todo.task.TaskFragment;
 
 /**
  * Created by zhanghuirong on 2016/4/11.
  */
 public class AddEditActivity extends AppCompatActivity {
 
-    public static final int REQUEST_ADD_STUDY = 1;
+    public static final int REQUEST_ADD_TASK = 1;
+
+    public static final String EXTRA_FOLDER_ID = "FOLDER_ID";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,8 +29,17 @@ public class AddEditActivity extends AppCompatActivity {
         if (addEditStudyFragment == null) {
             addEditStudyFragment = AddEditFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), addEditStudyFragment, R.id.contentFrame);
+
+            if (getIntent().hasExtra(AddEditActivity.EXTRA_FOLDER_ID)) {
+                String folderId = getIntent().getStringExtra(EXTRA_FOLDER_ID);
+                Bundle bundle = new Bundle();
+                bundle.putString(AddEditFragment.ARGUMENT_FOLDER_ID, folderId);
+                addEditStudyFragment.setArguments(bundle);
+            } else {
+                //
+            }
         }
         // Create the presenter
-        new AddEditPresenter(addEditStudyFragment);
+        new AddEditPresenter(addEditStudyFragment, TaskRepository.getInstance(TaskLocalDataSource.getInstance(this)));
     }
 }

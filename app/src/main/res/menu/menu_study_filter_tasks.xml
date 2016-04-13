@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_study_task_add"
+        android:id="@+id/menu_folder_task_add"
         android:icon="@drawable/ic_add_black_24dp"
         android:title="@string/title_study_task_add" />
     <item
