@@ -28,13 +28,11 @@ public class TaskRepository implements TaskDataSource {
 
     @Override
     public void saveTask(@NonNull Task task) {
-
+        mTaskLocalDataSource.saveTask(task);
     }
 
     @Override
     public void getTasks(LoadTasksCallback callback) {
-
+        mTaskLocalDataSource.getTasks(callback);
     }
-
-
 }
