@@ -16,6 +16,8 @@ public interface FolderContract {
 
         void showFolders(List<Folder> folders);
 
+        void showNoFolders();
+
         void showFolderDetailsUi(int id);
     }
 

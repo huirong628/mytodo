@@ -65,25 +65,14 @@ public class FolderPresenter implements FolderContract.Presenter {
         mFolderRepository.getFolders(new FolderDataSource.LoadFoldersCallback() {
             @Override
             public void onFoldersLoaded(List<Folder> folders) {
-                processFolders(folders);
+                mView.showFolders(folders);
             }
 
             @Override
             public void onDataNotAvailable() {
                 // The view may not be able to handle UI updates anymore
+                mView.showNoFolders();
             }
         });
-    }
-
-    private void processFolders(List<Folder> folders) {
-        if (folders.isEmpty()) {
-            // Show a message indicating there are no tasks for that filter type.
-            //processEmptyTasks();
-        } else {
-            // Show the list of tasks
-            mView.showFolders(folders);
-            // Set the filter label's text.
-            // showFilterLabel();
-        }
     }
 }

@@ -43,25 +43,13 @@ public class TaskPresenter implements TaskContract.Presenter {
         mTaskDataSource.getTasks(new TaskDataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(List<Task> tasks) {
-                processTasks(tasks);
+                mTaskView.showTasks(tasks);
             }
 
             @Override
             public void onDataNotAvailable() {
-
+                mTaskView.showNoTasks();
             }
         }, folderId);
-    }
-
-    private void processTasks(List<Task> tasks) {
-        if (tasks.isEmpty()) {
-            processEmptyTasks();
-        } else {
-            mTaskView.showTasks(tasks);
-        }
-    }
-
-    private void processEmptyTasks() {
-        mTaskView.showNoTasks();
     }
 }

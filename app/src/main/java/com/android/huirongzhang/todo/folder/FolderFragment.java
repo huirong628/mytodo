@@ -82,13 +82,18 @@ public class FolderFragment extends Fragment implements FolderContract.View {
 
     @Override
     public void showFolderList() {
-        //reresh list
+        //refresh list
         mPresenter.loadFolders(false);
     }
 
     @Override
     public void showFolders(List<Folder> folders) {
         mListAdapter.replaceData(folders);
+    }
+
+    @Override
+    public void showNoFolders() {
+        //show no folders
     }
 
     @Override
