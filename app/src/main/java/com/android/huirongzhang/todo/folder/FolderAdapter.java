@@ -52,24 +52,35 @@ public class FolderAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View rowView = view;
-        if (rowView == null) {
+    public View getView(int i, View convert, ViewGroup viewGroup) {
+
+        View view = convert;
+        ViewHolder viewHolder;
+        if (view == null) {
+            viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-            rowView = inflater.inflate(R.layout.folder_item, viewGroup, false);
+            view = inflater.inflate(R.layout.folder_item, viewGroup, false);
+            viewHolder.name = (TextView) view.findViewById(R.id.folder_name);
+            view.setTag(viewHolder);
+
+        } else {
+            viewHolder = (ViewHolder) view.getTag();
         }
 
         final Folder folder = (Folder) getItem(i);
 
-        TextView titleTV = (TextView) rowView.findViewById(R.id.folder_name);
-        titleTV.setText(folder.getTitle());
+        viewHolder.name.setText(folder.getTitle());
 
-        rowView.setOnClickListener(new View.OnClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mItemListener.onFolderClick(folder);
             }
         });
-        return rowView;
+        return view;
+    }
+
+    private static class ViewHolder {
+        TextView name;
     }
 }
