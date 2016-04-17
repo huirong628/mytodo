@@ -1,6 +1,7 @@
 package com.android.huirongzhang.todo.pulltorefresh;
 
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -10,6 +11,9 @@ import java.util.ArrayList;
  * Created by zhanghuirong on 2016/4/15.
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int TYPE_HEADER_VIEW = Integer.MIN_VALUE;
+    private static final int TYPE_FOOTER_VIEW = Integer.MIN_VALUE + 1;
 
     /*自定义adapter
      */
@@ -23,12 +27,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        int headerViewsCountCount = getHeaderViewsCount();
+        if (viewType < TYPE_HEADER_VIEW + headerViewsCountCount) {
+            return new ViewHolder(mHeaderViews.get(viewType - TYPE_HEADER_VIEW));
+        } else if (viewType >= TYPE_FOOTER_VIEW && viewType < Integer.MAX_VALUE / 2) {
+            return new ViewHolder(mFooterViews.get(viewType - TYPE_FOOTER_VIEW));
+        } else {
+            return mViewAdapter.onCreateViewHolder(parent, viewType - Integer.MAX_VALUE / 2);
+        }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        int headerViewsCountCount = getHeaderViewsCount();
+        if (position >= headerViewsCountCount && position < headerViewsCountCount + mViewAdapter.getItemCount()) {
+            mViewAdapter.onBindViewHolder(holder, position - headerViewsCountCount);
+        } else {
+            ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+            if (layoutParams instanceof StaggeredGridLayoutManager.LayoutParams) {
+                ((StaggeredGridLayoutManager.LayoutParams) layoutParams).setFullSpan(true);
+            }
+        }
     }
 
     @Override
@@ -146,4 +165,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super.onItemRangeMoved(fromPosition, toPosition, itemCount);
         }
     };
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
 }
