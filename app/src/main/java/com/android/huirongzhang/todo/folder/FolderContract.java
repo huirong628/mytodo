@@ -12,6 +12,8 @@ import java.util.List;
 public interface FolderContract {
     interface View extends BaseView<Presenter> {
 
+        void showPopUpMenu();
+
         void showFolderList();
 
         void showFolders(List<Folder> folders);

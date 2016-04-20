@@ -12,13 +12,14 @@
 		android:layout_weight="1"
 		android:gravity="center">
 
-		<ImageView
+		<CheckBox
 			android:id="@+id/folder_edit"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:paddingLeft="16dp"
-			android:src="@drawable/ic_radio_button_checked_black_24dp"
-			android:visibility="gone"/>
+			android:button="@null"
+			android:layout_marginLeft="16dp"
+			android:background="@drawable/selector_folder_edit_cb_bg"
+			android:visibility="visible"/>
 
 		<TextView
 			android:id="@+id/folder_name"
@@ -47,6 +48,7 @@
 			android:textSize="16sp"/>
 
 		<ImageView
+			android:id="@+id/chevron_right"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:src="@drawable/ic_chevron_right_black_24dp"/>

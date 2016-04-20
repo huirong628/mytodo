@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item
+		android:id="@+id/menu_folder_add"
+		android:title="@string/title_folder_add"/>
+	<item
+		android:id="@+id/menu_folder_edit"
+		android:title="@string/title_folder_edit"/>
+	<item
+		android:id="@+id/menu_folder_delete"
+		android:title="@string/title_folder_delete"/>
+
+</menu>

@@ -4,9 +4,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.huirongzhang.todo.BasePresenter;
+import com.android.huirongzhang.todo.ActivityUtils;
 import com.android.huirongzhang.todo.R;
 import com.android.huirongzhang.todo.data.folder.Folder;
 
@@ -22,14 +24,24 @@ public class FolderAdapter extends BaseAdapter {
 
 	private FolderItemListener mItemListener;
 
-	public FolderAdapter(ArrayList<Folder> folders, FolderItemListener itemListener) {
+	private Boolean mEditMode = false;
+
+	public FolderAdapter(ArrayList<Folder> folders) {
 		setList(folders);
-		mItemListener = itemListener;
 	}
 
 	public void replaceData(List<Folder> folders) {
 		setList(folders);
 		notifyDataSetChanged();
+	}
+
+	public void showEditMode(boolean editMode) {
+		mEditMode = editMode;
+		notifyDataSetChanged();
+	}
+
+	public void setItemListener(FolderItemListener itemListener) {
+		mItemListener = itemListener;
 	}
 
 	private void setList(List<Folder> folders) {
@@ -55,13 +67,15 @@ public class FolderAdapter extends BaseAdapter {
 	public View getView(int i, View convert, ViewGroup viewGroup) {
 
 		View view = convert;
-		ViewHolder viewHolder;
+		final ViewHolder viewHolder;
 		if (view == null) {
 			viewHolder = new ViewHolder();
 			LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 			view = inflater.inflate(R.layout.folder_item, viewGroup, false);
+			viewHolder.edit = (CheckBox) view.findViewById(R.id.folder_edit);
 			viewHolder.name = (TextView) view.findViewById(R.id.folder_name);
 			viewHolder.num = (TextView) view.findViewById(R.id.task_num);
+			viewHolder.chevronRight = (ImageView) view.findViewById(R.id.chevron_right);
 			view.setTag(viewHolder);
 
 		} else {
@@ -72,17 +86,39 @@ public class FolderAdapter extends BaseAdapter {
 
 		viewHolder.name.setText(folder.getTitle());
 
-		view.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				mItemListener.onFolderClick(folder);
-			}
-		});
+		if (mEditMode) {
+			//重新设置布局
+			viewHolder.name.setPadding(ActivityUtils.dip2px(viewGroup.getContext(), 72), 0, 0, 0);
+			viewHolder.edit.setVisibility(View.VISIBLE);
+			viewHolder.chevronRight.setVisibility(View.INVISIBLE);
+			viewHolder.edit.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					//修改状态
+					//viewHolder.edit.setImageResource(R.drawable.ic_radio_button_checked_black_24dp);
+				}
+			});
+		} else {
+			viewHolder.edit.setVisibility(View.GONE);
+			viewHolder.chevronRight.setVisibility(View.VISIBLE);
+			viewHolder.name.setPadding(ActivityUtils.dip2px(viewGroup.getContext(), 16), 0, 0, 0);
+		}
+
+		if (mItemListener != null) {
+			view.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					mItemListener.onFolderClick(folder);
+				}
+			});
+		}
 		return view;
 	}
 
 	private static class ViewHolder {
+		CheckBox edit;
 		TextView name;
 		TextView num;
+		ImageView chevronRight;
 	}
 }

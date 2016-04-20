@@ -2,8 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_folder_add"
-        android:title="add"
-        android:icon="@drawable/ic_create_new_folder_white_24dp"
-        app:showAsAction="always" />
+	    android:id="@+id/menu_folder_edit"
+	    android:title="@string/title_folder_edit"
+	    app:showAsAction="always" />
 </menu>
