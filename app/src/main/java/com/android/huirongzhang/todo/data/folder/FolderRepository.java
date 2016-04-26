@@ -34,4 +34,9 @@ public class FolderRepository implements FolderDataSource {
     public void getFolders(LoadFoldersCallback callback) {
         mFolderLocalDataSource.getFolders(callback);
     }
+
+    @Override
+    public void updateFolder(@NonNull int id, @NonNull String title) {
+        mFolderLocalDataSource.updateFolder(id, title);
+    }
 }

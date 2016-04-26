@@ -19,4 +19,6 @@ public interface FolderDataSource {
     void saveFolder(@NonNull Folder folder);
 
     void getFolders(LoadFoldersCallback callback);
+
+    void updateFolder(@NonNull int id, @NonNull String title);
 }

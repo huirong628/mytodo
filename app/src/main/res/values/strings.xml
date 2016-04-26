@@ -15,4 +15,5 @@
 	<string name="title_folder_add">New Folder</string>
 	<string name="title_folder_edit">Edit</string>
 	<string name="title_folder_delete">Delete</string>
+	<string name="dialog_content">Enter a new name for this folder.</string>
 </resources>

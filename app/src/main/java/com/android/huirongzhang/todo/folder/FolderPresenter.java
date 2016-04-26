@@ -50,6 +50,16 @@ public class FolderPresenter implements FolderContract.Presenter {
         mView.showFolderDetailsUi(clickedFolder.getId());
     }
 
+    @Override
+    public void updateFolder(int id, String folderName) {
+        if (!TextUtils.isEmpty(folderName)) {
+            mFolderRepository.updateFolder(id, folderName);
+        }
+        //save to db
+        //update UI
+        mView.showFolderList();
+    }
+
     private void loadFolders(boolean forceUpdate, final boolean showLoadingUI) {
 //        if (showLoadingUI) {
 //            mTasksView.setLoadingIndicator(true);

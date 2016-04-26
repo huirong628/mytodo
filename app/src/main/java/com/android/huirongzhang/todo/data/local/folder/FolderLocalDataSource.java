@@ -81,4 +81,18 @@ public class FolderLocalDataSource implements FolderDataSource {
             callback.onFoldersLoaded(folders);
         }
     }
+
+    @Override
+    public void updateFolder(@NonNull int id, String title) {
+        SQLiteDatabase db = mDBHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FolderEntry.COLUMN_NAME_ENTRY_ID, id);
+        values.put(FolderEntry.COLUMN_NAME_TITLE, title);
+        String whereClause = FolderEntry.COLUMN_NAME_ENTRY_ID + "=" + id;
+        String[] whereArgs = null;
+        db.update(FolderEntry.TABLE_NAME, values, whereClause, whereArgs);
+
+        db.close();
+    }
 }

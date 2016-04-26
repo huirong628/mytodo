@@ -29,5 +29,7 @@ public interface FolderContract {
         void loadFolders(boolean forceUpdate);
 
         void openFolderDetails(Folder clickedFolder);
+
+        void updateFolder(int id, String folderName);
     }
 }

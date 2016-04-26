@@ -1,56 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="48dp"
-              android:background="#F9F9F9"
-              android:gravity="center"
-              android:orientation="horizontal">
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="#F9F9F9"
+    android:orientation="horizontal">
 
-	<RelativeLayout
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_weight="1"
-		android:gravity="center">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-		<CheckBox
-			android:id="@+id/folder_edit"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:button="@null"
-			android:layout_marginLeft="16dp"
-			android:background="@drawable/selector_folder_edit_cb_bg"
-			android:visibility="visible"/>
+        <LinearLayout
+            android:id="@+id/folder_cb_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="32dp">
 
-		<TextView
-			android:id="@+id/folder_name"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
-			android:paddingLeft="16dp"
-			android:singleLine="true"
-			android:text="FolderName"
-			android:textSize="16sp"/>
-	</RelativeLayout>
+            <CheckBox
+                android:id="@+id/folder_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:button="@drawable/selector_folder_edit_cb_bg" />
+        </LinearLayout>
 
-	<LinearLayout
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:gravity="center"
-		android:orientation="horizontal"
-		android:paddingRight="16dp">
+        <TextView
+            android:id="@+id/folder_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="FolderName"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingRight="16dp">
 
 
-		<TextView
-			android:id="@+id/task_num"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="1"
-			android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/task_num"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="1"
+            android:textSize="16sp" />
 
-		<ImageView
-			android:id="@+id/chevron_right"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:src="@drawable/ic_chevron_right_black_24dp"/>
-	</LinearLayout>
+        <ImageView
+            android:id="@+id/chevron_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_chevron_right_black_24dp" />
+    </LinearLayout>
 </LinearLayout>
