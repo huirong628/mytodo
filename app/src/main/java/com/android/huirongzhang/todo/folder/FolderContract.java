@@ -31,5 +31,7 @@ public interface FolderContract {
         void openFolderDetails(Folder clickedFolder);
 
         void updateFolder(int id, String folderName);
+
+        void deleteFolder(List<Folder> folders);
     }
 }

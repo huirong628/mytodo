@@ -60,6 +60,11 @@ public class FolderPresenter implements FolderContract.Presenter {
         mView.showFolderList();
     }
 
+    @Override
+    public void deleteFolder(List<Folder> folders) {
+
+    }
+
     private void loadFolders(boolean forceUpdate, final boolean showLoadingUI) {
 //        if (showLoadingUI) {
 //            mTasksView.setLoadingIndicator(true);

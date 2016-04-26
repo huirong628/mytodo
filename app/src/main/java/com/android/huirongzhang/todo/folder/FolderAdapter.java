@@ -96,7 +96,11 @@ public class FolderAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     //delete folder
-                    mItemListener.onFolderDelete(folder);
+                    List<Folder> folders = new ArrayList<Folder>();
+                    if (viewHolder.edit.isChecked()) {
+                        folders.add(folder);
+                    }
+                    mItemListener.onFolderDelete(folders);
                 }
             });
             viewHolder.name.setClickable(true);

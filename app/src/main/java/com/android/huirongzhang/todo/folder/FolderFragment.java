@@ -2,6 +2,7 @@ package com.android.huirongzhang.todo.folder;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -40,6 +41,8 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
 
     private TextView mDeleteView;
 
+    private List<Folder> mDeleteFolders;//要删除的folder
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +63,7 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
         mCreateView.setOnClickListener(this);
 
         mDeleteView = (TextView) root.findViewById(R.id.folder_delete);
+        mDeleteView.setClickable(false);
         mDeleteView.setOnClickListener(this);
 
         setHasOptionsMenu(true);
@@ -85,6 +89,7 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
                 break;
             case R.id.folder_delete:
                 //执行删除操作
+                mPresenter.deleteFolder(mDeleteFolders);
                 break;
             default:
                 break;
@@ -256,8 +261,15 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
         }
 
         @Override
-        public void onFolderDelete(Folder folder) {
-
+        public void onFolderDelete(List<Folder> folders) {
+            mDeleteFolders = folders;
+            if (mDeleteFolders.size() == 0) {
+                mDeleteView.setTextColor(Color.GRAY);
+                mDeleteView.setClickable(false);
+            } else {
+                mDeleteView.setTextColor(Color.WHITE);
+                mDeleteView.setClickable(true);
+            }
         }
 
         @Override
