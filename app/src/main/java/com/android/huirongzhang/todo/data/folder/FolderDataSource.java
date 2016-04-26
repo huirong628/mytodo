@@ -21,4 +21,6 @@ public interface FolderDataSource {
     void getFolders(LoadFoldersCallback callback);
 
     void updateFolder(@NonNull int id, @NonNull String title);
+
+    void deleteFolder(@NonNull int id);
 }

@@ -95,4 +95,12 @@ public class FolderLocalDataSource implements FolderDataSource {
 
         db.close();
     }
+
+    @Override
+    public void deleteFolder(@NonNull int id) {
+        SQLiteDatabase db = mDBHelper.getWritableDatabase();
+        String whereClause = FolderEntry.COLUMN_NAME_ENTRY_ID + "=?";
+        String[] whereArgs = new String[]{id + ""};
+        db.delete(FolderEntry.TABLE_NAME, whereClause, whereArgs);
+    }
 }
