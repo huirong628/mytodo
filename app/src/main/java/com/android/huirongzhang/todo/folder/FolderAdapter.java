@@ -89,7 +89,7 @@ public class FolderAdapter extends BaseAdapter {
             viewHolder.editView = view.findViewById(R.id.folder_cb_layout);
             viewHolder.edit = (CheckBox) view.findViewById(R.id.folder_cb);
             viewHolder.name = (TextView) view.findViewById(R.id.folder_name);
-            viewHolder.num = (TextView) view.findViewById(R.id.task_num);
+            viewHolder.count = (TextView) view.findViewById(R.id.task_count);
             viewHolder.chevronRight = (ImageView) view.findViewById(R.id.chevron_right);
             view.setTag(viewHolder);
 
@@ -100,6 +100,7 @@ public class FolderAdapter extends BaseAdapter {
         final Folder folder = (Folder) getItem(i);
 
         viewHolder.name.setText(folder.getTitle());
+        viewHolder.count.setText(folder.getCount() + "");
 
         if (mEditMode) {
             //重新设置布局
@@ -153,7 +154,7 @@ public class FolderAdapter extends BaseAdapter {
         View editView;
         CheckBox edit;
         TextView name;
-        TextView num;
+        TextView count;
         ImageView chevronRight;
     }
 

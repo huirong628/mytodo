@@ -26,6 +26,7 @@ public final class DBHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + FolderContract.FolderEntry.TABLE_NAME + " (" +
                     FolderContract.FolderEntry.COLUMN_NAME_ENTRY_ID + INTEGER_TYPE + " PRIMARY KEY," +
                     FolderContract.FolderEntry.COLUMN_NAME_TITLE + TEXT_TYPE +
+                    FolderContract.FolderEntry.COLUMN_NAME_COUNT + INTEGER_TYPE +
                     " )";
 
     private static final String SQL_CREATE_TABLE_TASK =

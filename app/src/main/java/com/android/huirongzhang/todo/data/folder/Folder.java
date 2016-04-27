@@ -10,6 +10,7 @@ import java.util.UUID;
 public final class Folder {
     private int id;
     private String title;
+    private int count;
 
     public Folder(@Nullable String title) {
         this.title = title;
@@ -35,4 +36,13 @@ public final class Folder {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
 }
