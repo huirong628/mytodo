@@ -36,10 +36,6 @@ public class FolderAdapter extends BaseAdapter {
         setList(folders);
     }
 
-    public static HashMap<Integer, Boolean> getIsSelected() {
-        return mIsSelected;
-    }
-
     public void replaceData(List<Folder> folders) {
         setList(folders);
         notifyDataSetChanged();
@@ -87,10 +83,10 @@ public class FolderAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.folder_item, viewGroup, false);
             viewHolder.editView = view.findViewById(R.id.folder_cb_layout);
-            viewHolder.edit = (CheckBox) view.findViewById(R.id.folder_cb);
-            viewHolder.name = (TextView) view.findViewById(R.id.folder_name);
-            viewHolder.count = (TextView) view.findViewById(R.id.task_count);
-            viewHolder.chevronRight = (ImageView) view.findViewById(R.id.chevron_right);
+            viewHolder.editCBView = (CheckBox) view.findViewById(R.id.folder_cb);
+            viewHolder.nameView = (TextView) view.findViewById(R.id.folder_name);
+            viewHolder.countView = (TextView) view.findViewById(R.id.task_count);
+            viewHolder.chevronRightView = (ImageView) view.findViewById(R.id.chevron_right);
             view.setTag(viewHolder);
 
         } else {
@@ -99,16 +95,16 @@ public class FolderAdapter extends BaseAdapter {
 
         final Folder folder = (Folder) getItem(i);
 
-        viewHolder.name.setText(folder.getTitle());
-        viewHolder.count.setText(folder.getCount() + "");
+        viewHolder.nameView.setText(folder.getTitle());
+        viewHolder.countView.setText(folder.getCount() + "");
 
         if (mEditMode) {
             //重新设置布局
             view.setClickable(false);
-            viewHolder.name.setPadding(ActivityUtils.dip2px(viewGroup.getContext(), 0), 0, 0, 0);
+            viewHolder.nameView.setPadding(ActivityUtils.dip2px(viewGroup.getContext(), 0), 0, 0, 0);
             viewHolder.editView.setVisibility(View.VISIBLE);
-            viewHolder.chevronRight.setVisibility(View.INVISIBLE);
-            viewHolder.edit.setOnClickListener(new View.OnClickListener() {
+            viewHolder.chevronRightView.setVisibility(View.INVISIBLE);
+            viewHolder.editCBView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mIsSelected.get(folder.getId())) {
@@ -122,9 +118,9 @@ public class FolderAdapter extends BaseAdapter {
                     mItemListener.onFolderDelete(mDeleteFolders);
                 }
             });
-            viewHolder.edit.setChecked(mIsSelected.get(folder.getId()));
-            viewHolder.name.setClickable(true);
-            viewHolder.name.setOnClickListener(new View.OnClickListener() {
+            viewHolder.editCBView.setChecked(mIsSelected.get(folder.getId()));
+            viewHolder.nameView.setClickable(true);
+            viewHolder.nameView.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
@@ -134,10 +130,10 @@ public class FolderAdapter extends BaseAdapter {
             });
         } else {
             view.setClickable(true);
-            viewHolder.name.setClickable(false);
+            viewHolder.nameView.setClickable(false);
             viewHolder.editView.setVisibility(View.GONE);
-            viewHolder.chevronRight.setVisibility(View.VISIBLE);
-            viewHolder.name.setPadding(ActivityUtils.dip2px(viewGroup.getContext(), 16), 0, 0, 0);
+            viewHolder.chevronRightView.setVisibility(View.VISIBLE);
+            viewHolder.nameView.setPadding(ActivityUtils.dip2px(viewGroup.getContext(), 16), 0, 0, 0);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -152,10 +148,10 @@ public class FolderAdapter extends BaseAdapter {
 
     private static class ViewHolder {
         View editView;
-        CheckBox edit;
-        TextView name;
-        TextView count;
-        ImageView chevronRight;
+        CheckBox editCBView;
+        TextView nameView;
+        TextView countView;
+        ImageView chevronRightView;
     }
 
     /**
