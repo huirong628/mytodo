@@ -45,6 +45,8 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
 
     private List<Folder> mDeleteFolders;//要删除的folder
 
+    private MenuItem mMenuItem;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,19 +108,29 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        mMenuItem = item;
         if (item.getItemId() == R.id.menu_folder_edit) {
             //showAddFolderDialog();
             //showPopUpMenu();
             String topTitle = item.getTitle().toString();
-            if (topTitle.equalsIgnoreCase("Edit")) {
-                topTitle = "Done";
-                mEditMode = true;
-                showDeleteView();
-            } else {
+//            if (topTitle.equalsIgnoreCase("Edit")) {
+//                topTitle = "Done";
+//                mEditMode = true;
+//                showDeleteView();
+//            } else {
+//                topTitle = "Edit";
+//                mEditMode = false;
+//                showNewFolderView();
+//            }
+
+            if (mEditMode) {
                 topTitle = "Edit";
-                mEditMode = false;
                 showNewFolderView();
+            } else {
+                topTitle = "Done";
+                showDeleteView();
             }
+            mEditMode = !mEditMode;
             item.setTitle(topTitle);
             mListAdapter.showEditMode(mEditMode);
         }
@@ -168,6 +180,8 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
         //refresh list
         if (mEditMode) {
             mListAdapter.showEditMode(false);
+            mEditMode = false;
+            mMenuItem.setTitle("Edit");
             showNewFolderView();
         }
         mPresenter.loadFolders(false);
@@ -197,6 +211,7 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
 
     private void showDeleteView() {
         mCreateView.setVisibility(View.GONE);
+        mDeleteView.setTextColor(Color.GRAY);
         mDeleteView.setVisibility(View.VISIBLE);
     }
 

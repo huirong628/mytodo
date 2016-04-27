@@ -101,10 +101,37 @@ public class FolderLocalDataSource implements FolderDataSource {
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
         String whereClause = FolderEntry.COLUMN_NAME_ENTRY_ID + "=?";
         int length = folders.size();
-        String[] whereArgs = new String[length + 1];//数组初始化
+        // String[] whereArgs = new String[]{};//数组初始化
         for (int i = 0; i < length; i++) {
-            whereArgs[i] = folders.get(i).getId() + "";
+//            whereArgs[i] = folders.get(i).getId() + "";
+            String[] whereArgs = new String[]{folders.get(i).getId() + ""};
+            db.delete(FolderEntry.TABLE_NAME, whereClause, whereArgs);
         }
-        db.delete(FolderEntry.TABLE_NAME, whereClause, whereArgs);
+        db.close();
     }
+/**
+ * 04-27 14:05:14.114 8111-8111/com.android.huirongzhang.todo E/AndroidRuntime: FATAL EXCEPTION: main
+ Process: com.android.huirongzhang.todo, PID: 8111
+ java.lang.IllegalArgumentException: Too many bind arguments.  2 arguments were provided but the statement needs 1 arguments.
+ at android.database.sqlite.SQLiteProgram.<init>(SQLiteProgram.java:68)
+ at android.database.sqlite.SQLiteStatement.<init>(SQLiteStatement.java:31)
+ at android.database.sqlite.SQLiteDatabase.delete(SQLiteDatabase.java:1494)
+ at com.android.huirongzhang.todo.data.local.folder.FolderLocalDataSource.deleteFolder(FolderLocalDataSource.java:108)
+ at com.android.huirongzhang.todo.data.folder.FolderRepository.deleteFolder(FolderRepository.java:47)
+ at com.android.huirongzhang.todo.folder.FolderPresenter.deleteFolder(FolderPresenter.java:66)
+ at com.android.huirongzhang.todo.folder.FolderFragment.onClick(FolderFragment.java:96)
+ at android.view.View.performClick(View.java:4456)
+ at android.view.View$PerformClick.run(View.java:18482)
+ at android.os.Handler.handleCallback(Handler.java:733)
+ at android.os.Handler.dispatchMessage(Handler.java:95)
+ at android.os.Looper.loop(Looper.java:136)
+ at android.app.ActivityThread.main(ActivityThread.java:5097)
+ at java.lang.reflect.Method.invokeNative(Native Method)
+ at java.lang.reflect.Method.invoke(Method.java:515)
+ at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:785)
+ at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:601)
+ at dalvik.system.NativeStart.main(Native Method)
+ *
+ */
 }
+
