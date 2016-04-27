@@ -25,16 +25,15 @@ public final class DBHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_TABLE_FOLDER =
             "CREATE TABLE " + FolderContract.FolderEntry.TABLE_NAME + " (" +
                     FolderContract.FolderEntry.COLUMN_NAME_ENTRY_ID + INTEGER_TYPE + " PRIMARY KEY," +
-                    FolderContract.FolderEntry.COLUMN_NAME_TITLE + TEXT_TYPE +
-                    FolderContract.FolderEntry.COLUMN_NAME_COUNT + INTEGER_TYPE +
-                    " )";
+                    FolderContract.FolderEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
+                    FolderContract.FolderEntry.COLUMN_NAME_COUNT + INTEGER_TYPE + " )";
 
     private static final String SQL_CREATE_TABLE_TASK =
             "CREATE TABLE " + TaskContract.TaskEntry.TABLE_NAME + " (" +
                     TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + INTEGER_TYPE + " PRIMARY KEY," +
                     TaskContract.TaskEntry.COLUMN_NAME_CONTENT + TEXT_TYPE + COMMA_SEP +
-                    TaskContract.TaskEntry.COLUMN_NAME_TYPE + TEXT_TYPE +
-                    " )";
+                    TaskContract.TaskEntry.COLUMN_NAME_DATE + TEXT_TYPE + COMMA_SEP +
+                    TaskContract.TaskEntry.COLUMN_NAME_TYPE + TEXT_TYPE + " )";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

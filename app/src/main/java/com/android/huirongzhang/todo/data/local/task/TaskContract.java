@@ -18,6 +18,7 @@ public final class TaskContract {
         public static final String TABLE_NAME = "task";
         public static final String COLUMN_NAME_ENTRY_ID = "entryid";
         public static final String COLUMN_NAME_CONTENT = "content";
+        public static final String COLUMN_NAME_DATE = "date";
         public static final String COLUMN_NAME_TYPE = "type";
     }
 }

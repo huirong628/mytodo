@@ -124,10 +124,10 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
 //            }
 
             if (mEditMode) {
-                topTitle = "Edit";
+                topTitle = getString(R.string.title_folder_edit);
                 showNewFolderView();
             } else {
-                topTitle = "Done";
+                topTitle = getString(R.string.title_folder_done);
                 showDeleteView();
             }
             mEditMode = !mEditMode;
@@ -181,7 +181,7 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
         if (mEditMode) {
             mListAdapter.showEditMode(false);
             mEditMode = false;
-            mMenuItem.setTitle("Edit");
+            mMenuItem.setTitle(R.string.title_folder_edit);
             showNewFolderView();
         }
         mPresenter.loadFolders(false);

@@ -10,6 +10,7 @@ import java.util.UUID;
 public class Task {
     private int id;
     private String content;
+    private String date;
     private int type;
 
     public Task() {
@@ -41,6 +42,14 @@ public class Task {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public int getType() {
