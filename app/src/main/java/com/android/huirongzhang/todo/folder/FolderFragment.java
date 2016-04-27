@@ -297,4 +297,8 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
             showUpdateFolderDialog(folder);
         }
     };
+
+    public static FolderFragment newInstance() {
+        return new FolderFragment();
+    }
 }
