@@ -68,6 +68,7 @@ public class TaskAdapter extends BaseAdapter {
         final Task task = (Task) getItem(i);
 
         viewHolder.contentView.setText(task.getContent());
+        viewHolder.dateView.setText(task.getDate());
 
 
         if (mEditMode) {

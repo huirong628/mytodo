@@ -10,7 +10,9 @@ import com.android.huirongzhang.todo.data.local.LocalDataSource;
 import com.android.huirongzhang.todo.data.task.Task;
 import com.android.huirongzhang.todo.data.task.TaskDataSource;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,6 +41,7 @@ public class TaskLocalDataSource extends LocalDataSource implements TaskDataSour
 //        values.put(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID, task.getId());
         values.put(TaskContract.TaskEntry.COLUMN_NAME_CONTENT, task.getContent());
         values.put(TaskContract.TaskEntry.COLUMN_NAME_TYPE, task.getType());
+        values.put(TaskContract.TaskEntry.COLUMN_NAME_DATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         db.insert(TaskContract.TaskEntry.TABLE_NAME, null, values);
 
         db.close();
@@ -52,6 +55,7 @@ public class TaskLocalDataSource extends LocalDataSource implements TaskDataSour
         String[] projection = {
                 TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID,
                 TaskContract.TaskEntry.COLUMN_NAME_CONTENT,
+                TaskContract.TaskEntry.COLUMN_NAME_DATE,
                 TaskContract.TaskEntry.COLUMN_NAME_TYPE,
         };
 
@@ -64,8 +68,10 @@ public class TaskLocalDataSource extends LocalDataSource implements TaskDataSour
             while (c.moveToNext()) {
                 int itemId = c.getInt(c.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID));
                 String content = c.getString(c.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_CONTENT));
+                String date = c.getString(c.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_DATE));
                 int type = c.getInt(c.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_TYPE));
                 Task task = new Task(itemId, content, type);
+                task.setDate(date);
                 tasks.add(task);
             }
         }
