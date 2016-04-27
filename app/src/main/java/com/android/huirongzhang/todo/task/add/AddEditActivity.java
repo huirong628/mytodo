@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.android.huirongzhang.todo.ActivityUtils;
 import com.android.huirongzhang.todo.R;
+import com.android.huirongzhang.todo.data.folder.FolderRepository;
+import com.android.huirongzhang.todo.data.local.folder.FolderLocalDataSource;
 import com.android.huirongzhang.todo.data.local.task.TaskLocalDataSource;
 import com.android.huirongzhang.todo.data.task.TaskRepository;
 import com.android.huirongzhang.todo.task.TaskFragment;
@@ -40,6 +42,7 @@ public class AddEditActivity extends AppCompatActivity {
             }
         }
         // Create the presenter
-        new AddEditPresenter(addEditStudyFragment, TaskRepository.getInstance(TaskLocalDataSource.getInstance(this)));
+        new AddEditPresenter(addEditStudyFragment, TaskRepository.getInstance(TaskLocalDataSource.getInstance(this)), FolderRepository.getInstance(FolderLocalDataSource.getInstance(this)));
+
     }
 }

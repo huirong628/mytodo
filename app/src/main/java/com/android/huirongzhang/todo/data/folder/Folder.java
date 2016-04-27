@@ -12,6 +12,10 @@ public final class Folder {
     private String title;
     private int count;
 
+    public Folder() {
+
+    }
+
     public Folder(@Nullable String title) {
         this.title = title;
     }

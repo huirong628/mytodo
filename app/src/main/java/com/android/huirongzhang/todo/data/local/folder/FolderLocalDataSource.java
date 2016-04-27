@@ -41,6 +41,7 @@ public class FolderLocalDataSource implements FolderDataSource {
 
         ContentValues values = new ContentValues();
         values.put(FolderEntry.COLUMN_NAME_TITLE, folder.getTitle());
+        values.put(FolderEntry.COLUMN_NAME_COUNT, folder.getCount());
 
         db.insert(FolderEntry.TABLE_NAME, null, values);
 
@@ -54,7 +55,8 @@ public class FolderLocalDataSource implements FolderDataSource {
 
         String[] projection = {
                 FolderEntry.COLUMN_NAME_ENTRY_ID,
-                FolderEntry.COLUMN_NAME_TITLE
+                FolderEntry.COLUMN_NAME_TITLE,
+                FolderEntry.COLUMN_NAME_COUNT
         };
 
         Cursor c = db.query(
@@ -64,7 +66,9 @@ public class FolderLocalDataSource implements FolderDataSource {
             while (c.moveToNext()) {
                 int itemId = c.getInt(c.getColumnIndexOrThrow(FolderEntry.COLUMN_NAME_ENTRY_ID));
                 String title = c.getString(c.getColumnIndexOrThrow(FolderEntry.COLUMN_NAME_TITLE));
+                int count = c.getInt(c.getColumnIndexOrThrow(FolderEntry.COLUMN_NAME_COUNT));
                 Folder folder = new Folder(itemId, title);
+                folder.setCount(count);
                 folders.add(folder);
             }
         }
@@ -97,6 +101,20 @@ public class FolderLocalDataSource implements FolderDataSource {
     }
 
     @Override
+    public void updateFolder(@NonNull int id) {
+        SQLiteDatabase db = mDBHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FolderEntry.COLUMN_NAME_ENTRY_ID, id);
+        values.put(FolderEntry.COLUMN_NAME_COUNT, getFolder(id).getCount() + 1);
+        String whereClause = FolderEntry.COLUMN_NAME_ENTRY_ID + "=" + id;
+        String[] whereArgs = null;
+        db.update(FolderEntry.TABLE_NAME, values, whereClause, whereArgs);
+
+        db.close();
+    }
+
+    @Override
     public void deleteFolder(@NonNull List<Folder> folders) {
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
         String whereClause = FolderEntry.COLUMN_NAME_ENTRY_ID + "=?";
@@ -108,6 +126,35 @@ public class FolderLocalDataSource implements FolderDataSource {
             db.delete(FolderEntry.TABLE_NAME, whereClause, whereArgs);
         }
         db.close();
+    }
+
+    private Folder getFolder(int id) {
+        Folder folder = new Folder();
+        SQLiteDatabase db = mDBHelper.getReadableDatabase();
+
+        String[] projection = {
+                FolderEntry.COLUMN_NAME_COUNT
+        };
+
+        String selection = FolderEntry.COLUMN_NAME_ENTRY_ID + "=?";
+
+        String[] selectionArgs = new String[]{id + ""};
+
+        Cursor c = db.query(
+                FolderEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        if (c != null && c.getCount() > 0) {
+            while (c.moveToNext()) {
+                int count = c.getInt(c.getColumnIndexOrThrow(FolderEntry.COLUMN_NAME_COUNT));
+                folder.setCount(count);
+            }
+        }
+        if (c != null) {
+            c.close();
+        }
+
+        // db.close();
+        return folder;
     }
 /**
  * 04-27 14:05:14.114 8111-8111/com.android.huirongzhang.todo E/AndroidRuntime: FATAL EXCEPTION: main
