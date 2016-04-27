@@ -39,6 +39,8 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
 
     private TextView mCreateView;
 
+    boolean mEditMode = false;
+
     private TextView mDeleteView;
 
     private List<Folder> mDeleteFolders;//要删除的folder
@@ -108,18 +110,17 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
             //showAddFolderDialog();
             //showPopUpMenu();
             String topTitle = item.getTitle().toString();
-            boolean editMode = false;
             if (topTitle.equalsIgnoreCase("Edit")) {
                 topTitle = "Done";
-                editMode = true;
+                mEditMode = true;
                 showDeleteView();
             } else {
                 topTitle = "Edit";
-                editMode = false;
+                mEditMode = false;
                 showNewFolderView();
             }
             item.setTitle(topTitle);
-            mListAdapter.showEditMode(editMode);
+            mListAdapter.showEditMode(mEditMode);
         }
         return true;
     }
@@ -165,6 +166,10 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
     @Override
     public void showFolderList() {
         //refresh list
+        if (mEditMode) {
+            mListAdapter.showEditMode(false);
+            showNewFolderView();
+        }
         mPresenter.loadFolders(false);
     }
 

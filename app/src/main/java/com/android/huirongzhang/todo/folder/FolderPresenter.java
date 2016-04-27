@@ -62,7 +62,12 @@ public class FolderPresenter implements FolderContract.Presenter {
 
     @Override
     public void deleteFolder(List<Folder> folders) {
-
+        if (folders != null && folders.size() > 0) {
+            mFolderRepository.deleteFolder(folders);
+        }
+        //save to db
+        //update UI
+        mView.showFolderList();
     }
 
     private void loadFolders(boolean forceUpdate, final boolean showLoadingUI) {

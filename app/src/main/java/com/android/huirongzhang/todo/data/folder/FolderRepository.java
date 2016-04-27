@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.android.huirongzhang.todo.data.local.folder.FolderLocalDataSource;
 
+import java.util.List;
+
 /**
  * Created by zhanghuirong on 2016/4/12.
  */
@@ -41,7 +43,7 @@ public class FolderRepository implements FolderDataSource {
     }
 
     @Override
-    public void deleteFolder(@NonNull int id) {
-        mFolderLocalDataSource.deleteFolder(id);
+    public void deleteFolder(@NonNull List<Folder> folders) {
+        mFolderLocalDataSource.deleteFolder(folders);
     }
 }

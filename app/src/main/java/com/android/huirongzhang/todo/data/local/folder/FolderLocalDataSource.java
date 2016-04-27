@@ -97,10 +97,14 @@ public class FolderLocalDataSource implements FolderDataSource {
     }
 
     @Override
-    public void deleteFolder(@NonNull int id) {
+    public void deleteFolder(@NonNull List<Folder> folders) {
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
         String whereClause = FolderEntry.COLUMN_NAME_ENTRY_ID + "=?";
-        String[] whereArgs = new String[]{id + ""};
+        int length = folders.size();
+        String[] whereArgs = new String[length + 1];//数组初始化
+        for (int i = 0; i < length; i++) {
+            whereArgs[i] = folders.get(i).getId() + "";
+        }
         db.delete(FolderEntry.TABLE_NAME, whereClause, whereArgs);
     }
 }

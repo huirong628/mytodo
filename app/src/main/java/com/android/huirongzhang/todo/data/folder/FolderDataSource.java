@@ -22,5 +22,5 @@ public interface FolderDataSource {
 
     void updateFolder(@NonNull int id, @NonNull String title);
 
-    void deleteFolder(@NonNull int id);
+    void deleteFolder(@NonNull List<Folder> folders);
 }

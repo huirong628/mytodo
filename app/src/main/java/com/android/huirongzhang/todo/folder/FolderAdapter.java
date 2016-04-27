@@ -13,6 +13,7 @@ import com.android.huirongzhang.todo.R;
 import com.android.huirongzhang.todo.data.folder.Folder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,8 +27,17 @@ public class FolderAdapter extends BaseAdapter {
 
     private boolean mEditMode = false;
 
+    private static HashMap<Integer, Boolean> mIsSelected;//保存是否选中的状态
+
+    //delete folder
+    private List<Folder> mDeleteFolders = null;
+
     public FolderAdapter(ArrayList<Folder> folders) {
         setList(folders);
+    }
+
+    public static HashMap<Integer, Boolean> getIsSelected() {
+        return mIsSelected;
     }
 
     public void replaceData(List<Folder> folders) {
@@ -46,6 +56,11 @@ public class FolderAdapter extends BaseAdapter {
 
     private void setList(List<Folder> folders) {
         mFolders = folders;
+        mIsSelected = new HashMap<Integer, Boolean>();
+        mDeleteFolders = new ArrayList<Folder>();
+        for (int i = 0; i < mFolders.size(); i++) {
+            mIsSelected.put(folders.get(i).getId(), false);
+        }
     }
 
     @Override
@@ -95,14 +110,18 @@ public class FolderAdapter extends BaseAdapter {
             viewHolder.edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //delete folder
-                    List<Folder> folders = new ArrayList<Folder>();
-                    if (viewHolder.edit.isChecked()) {
-                        folders.add(folder);
+                    if (mIsSelected.get(folder.getId())) {
+                        mIsSelected.put(folder.getId(), false);
+                        mDeleteFolders.remove(folder);
+                    } else {
+                        mIsSelected.put(folder.getId(), true);
+                        mDeleteFolders.add(folder);
                     }
-                    mItemListener.onFolderDelete(folders);
+
+                    mItemListener.onFolderDelete(mDeleteFolders);
                 }
             });
+            viewHolder.edit.setChecked(mIsSelected.get(folder.getId()));
             viewHolder.name.setClickable(true);
             viewHolder.name.setOnClickListener(new View.OnClickListener() {
 
@@ -137,4 +156,10 @@ public class FolderAdapter extends BaseAdapter {
         TextView num;
         ImageView chevronRight;
     }
+
+    /**
+     * 是否选中
+     * 获取当前状态
+     *
+     */
 }
