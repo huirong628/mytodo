@@ -43,6 +43,12 @@ public class FolderAdapter extends BaseAdapter {
 
     public void showEditMode(boolean editMode) {
         mEditMode = editMode;
+        //每次进入编辑状态都进行初始化
+        mIsSelected = new HashMap<Integer, Boolean>();
+        mDeleteFolders = new ArrayList<Folder>();
+        for (int i = 0; i < mFolders.size(); i++) {
+            mIsSelected.put(mFolders.get(i).getId(), false);
+        }
         notifyDataSetChanged();
     }
 
@@ -52,11 +58,6 @@ public class FolderAdapter extends BaseAdapter {
 
     private void setList(List<Folder> folders) {
         mFolders = folders;
-        mIsSelected = new HashMap<Integer, Boolean>();
-        mDeleteFolders = new ArrayList<Folder>();
-        for (int i = 0; i < mFolders.size(); i++) {
-            mIsSelected.put(folders.get(i).getId(), false);
-        }
     }
 
     @Override
