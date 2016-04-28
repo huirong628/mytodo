@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -28,7 +29,7 @@ import java.util.List;
 /**
  * Created by HuirongZhang on 16/4/9.
  */
-public class TaskFragment extends Fragment implements TaskContract.View {
+public class TaskFragment extends Fragment implements TaskContract.View, View.OnClickListener {
 
     public static final String ARGUMENT_FOLDER_ID = "FOLDER_ID";
 
@@ -41,6 +42,8 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     private int mFolderId;
 
     private TaskAdapter mListAdapter;
+
+    private ImageView mCreateView;
 
     public static TaskFragment newInstance() {
         return new TaskFragment();
@@ -66,6 +69,9 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.task_fragment, container, false);
 
+        mCreateView = (ImageView) root.findViewById(R.id.task_create);
+        mCreateView.setOnClickListener(this);
+
         //set up tasks view
         ListView listView = (ListView) root.findViewById(R.id.tasks_list);
         mTasksView = (LinearLayout) root.findViewById(R.id.tasks);
@@ -90,6 +96,13 @@ public class TaskFragment extends Fragment implements TaskContract.View {
     public void onResume() {
         super.onResume();
         mPresenter.loadTasks(mFolderId);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.task_create) {
+            mPresenter.setAction(TaskFilterType.TASK_ADD);
+        }
     }
 
     @Override
