@@ -60,9 +60,9 @@ public class TaskLocalDataSource extends LocalDataSource implements TaskDataSour
         };
 
         String selection = TaskContract.TaskEntry.COLUMN_NAME_TYPE + " = " + folderId;
-
+        String orderBy = TaskContract.TaskEntry.COLUMN_NAME_DATE + " desc";
         Cursor c = db.query(
-                TaskContract.TaskEntry.TABLE_NAME, projection, selection, null, null, null, null);
+                TaskContract.TaskEntry.TABLE_NAME, projection, selection, null, null, null, orderBy);
 
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
