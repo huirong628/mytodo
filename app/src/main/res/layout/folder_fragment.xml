@@ -29,7 +29,7 @@
 			android:id="@+id/folder_delete"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/title_folder_delete"
+			android:text="@string/title_delete"
 			android:textColor="#BFBFBF"
 			android:visibility="gone"/>
 

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import com.android.huirongzhang.todo.R;
 import com.android.huirongzhang.todo.data.folder.Folder;
 import com.android.huirongzhang.todo.task.TaskActivity;
-import com.android.huirongzhang.todo.task.TaskFilterType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,10 +122,10 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
 //            }
 
             if (mEditMode) {
-                topTitle = getString(R.string.title_folder_edit);
+                topTitle = getString(R.string.title_edit);
                 showNewFolderView();
             } else {
-                topTitle = getString(R.string.title_folder_done);
+                topTitle = getString(R.string.title_done);
                 showDeleteView();
             }
             mEditMode = !mEditMode;
@@ -181,7 +179,7 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
         if (mEditMode) {
             mListAdapter.showEditMode(false);
             mEditMode = false;
-            mMenuItem.setTitle(R.string.title_folder_edit);
+            mMenuItem.setTitle(R.string.title_edit);
             showNewFolderView();
         }
         mPresenter.loadFolders(false);

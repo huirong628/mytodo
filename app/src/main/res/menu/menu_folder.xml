@@ -5,9 +5,9 @@
 		android:title="@string/title_folder_add"/>
 	<item
 		android:id="@+id/menu_folder_edit"
-		android:title="@string/title_folder_edit"/>
+		android:title="@string/title_edit" />
 	<item
 		android:id="@+id/menu_folder_delete"
-		android:title="@string/title_folder_delete"/>
+		android:title="@string/title_delete" />
 
 </menu>

@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.android.huirongzhang.todo.R;
-import com.android.huirongzhang.todo.data.folder.Folder;
 import com.android.huirongzhang.todo.data.task.Task;
 import com.android.huirongzhang.todo.task.add.AddEditActivity;
 
@@ -44,6 +43,10 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
     private TaskAdapter mListAdapter;
 
     private ImageView mCreateView;
+
+    private MenuItem mMenuItem;
+
+    boolean mEditMode = false;
 
     public static TaskFragment newInstance() {
         return new TaskFragment();
@@ -113,10 +116,19 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_task_filter:
-                showFilteringPopUpMenu();
-                break;
+        mMenuItem = item;
+        if (item.getItemId() == R.id.menu_folder_edit) {
+            String topTitle = "";
+            if (mEditMode) {
+                topTitle = getString(R.string.title_edit);
+                showCreateView();
+            } else {
+                topTitle = getString(R.string.title_done);
+                //showDeleteView();
+            }
+            mEditMode = !mEditMode;
+            item.setTitle(topTitle);
+            mListAdapter.showEditMode(mEditMode);
         }
         return true;
     }
@@ -190,5 +202,9 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
         if (getArguments() != null && getArguments().containsKey(ARGUMENT_FOLDER_ID)) {
             mFolderId = getArguments().getInt(ARGUMENT_FOLDER_ID);
         }
+    }
+
+    private void showCreateView() {
+        mCreateView.setVisibility(View.GONE);
     }
 }

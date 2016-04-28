@@ -13,6 +13,8 @@ import com.android.huirongzhang.todo.R;
 import com.android.huirongzhang.todo.data.folder.Folder;
 import com.android.huirongzhang.todo.data.task.Task;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,6 +25,12 @@ public class TaskAdapter extends BaseAdapter {
     private List<Task> mTasks;
 
     private boolean mEditMode = false;
+    ;
+
+    private static HashMap<Integer, Boolean> mIsSelected;//保存是否选中的状态
+
+    //delete task
+    private List<Task> mDeleteTasks = null;
 
     public TaskAdapter(List<Task> tasks) {
         setData(tasks);
@@ -30,6 +38,17 @@ public class TaskAdapter extends BaseAdapter {
 
     public void setData(List<Task> tasks) {
         mTasks = tasks;
+        notifyDataSetChanged();
+    }
+
+    public void showEditMode(boolean editMode) {
+        mEditMode = editMode;
+        //每次进入编辑状态都进行初始化
+        mIsSelected = new HashMap<Integer, Boolean>();
+        mDeleteTasks = new ArrayList<Task>();
+        for (int i = 0; i < mTasks.size(); i++) {
+            mIsSelected.put(mTasks.get(i).getId(), false);
+        }
         notifyDataSetChanged();
     }
 
@@ -80,15 +99,15 @@ public class TaskAdapter extends BaseAdapter {
             viewHolder.editCBView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    if (mIsSelected.get(folder.getId())) {
-//                        mIsSelected.put(folder.getId(), false);
-//                        mDeleteFolders.remove(folder);
-//                    } else {
-//                        mIsSelected.put(folder.getId(), true);
-//                        mDeleteFolders.add(folder);
-//                    }
-//
-//                    mItemListener.onFolderDelete(mDeleteFolders);
+                    if (mIsSelected.get(task.getId())) {
+                        mIsSelected.put(task.getId(), false);
+                        mDeleteTasks.remove(task);
+                    } else {
+                        mIsSelected.put(task.getId(), true);
+                        mDeleteTasks.add(task);
+                    }
+
+                    //mItemListener.onFolderDelete(mDeleteTasks);
                 }
             });
             //  viewHolder.editCBView.setChecked(mIsSelected.get(folder.getId()));
