@@ -67,8 +67,6 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
         mDeleteView = (TextView) root.findViewById(R.id.folder_delete);
         mDeleteView.setClickable(false);
         mDeleteView.setOnClickListener(this);
-
-        setHasOptionsMenu(true);
         return root;
     }
 
@@ -182,6 +180,7 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
             mMenuItem.setTitle(R.string.title_edit);
             showNewFolderView();
         }
+        setHasOptionsMenu(true);
         mPresenter.loadFolders(false);
     }
 
@@ -199,6 +198,7 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
             showNewFolderView();
         }
         //show no folders
+        setHasOptionsMenu(false);
     }
 
     @Override

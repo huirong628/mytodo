@@ -94,8 +94,6 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
         //set up no tasks view
         mNoTasksView = root.findViewById(R.id.noTasks);
 
-        setHasOptionsMenu(true);
-
         return root;
     }
 
@@ -200,6 +198,7 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
             mMenuItem.setTitle(R.string.title_edit);
             showCreateView();
         }
+        setHasOptionsMenu(false);
         mTasksView.setVisibility(View.GONE);
         mNoTasksView.setVisibility(View.VISIBLE);
     }
@@ -212,6 +211,7 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
             mMenuItem.setTitle(R.string.title_edit);
             showCreateView();
         }
+        setHasOptionsMenu(true);
         mTasksView.setVisibility(View.VISIBLE);
         mNoTasksView.setVisibility(View.GONE);
         mListAdapter.setData(tasks);
