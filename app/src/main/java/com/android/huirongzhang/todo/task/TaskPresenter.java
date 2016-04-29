@@ -39,6 +39,12 @@ public class TaskPresenter implements TaskContract.Presenter {
         }
     }
 
+    @Override
+    public void openTaskDetails(Task task) {
+        //
+        mTaskView.showTaskDetails(task);
+    }
+
     public void loadTasks(boolean forceUpdate, int folderId) {
         mTaskDataSource.getTasks(new TaskDataSource.LoadTasksCallback() {
             @Override

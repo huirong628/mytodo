@@ -15,5 +15,7 @@ public interface AddEditContract {
     interface Presenter extends BasePresenter {
 
         void addTask(String description, int folderId);
+
+        void updateTask(String content, int taskId);
     }
 }

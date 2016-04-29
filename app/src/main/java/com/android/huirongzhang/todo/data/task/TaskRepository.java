@@ -34,4 +34,9 @@ public class TaskRepository implements TaskDataSource {
     public void getTasks(LoadTasksCallback callback, int folderId) {
         mTaskLocalDataSource.getTasks(callback, folderId);
     }
+
+    @Override
+    public void updateTask(String content, int taskId) {
+        mTaskLocalDataSource.updateTask(content, taskId);
+    }
 }

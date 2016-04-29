@@ -35,9 +35,15 @@ public class AddEditPresenter implements AddEditContract.Presenter {
         Task task = new Task(description, folderId);
         mTaskDataSource.saveTask(task);
 
-        updateFolder(folderId);
+        updateFolder(folderId);//更新数量
 
         // After an edit, go back to the list.
+        mAddEditView.showTaskList();
+    }
+
+    @Override
+    public void updateTask(String content, int taskId) {
+        mTaskDataSource.updateTask(content, taskId);
         mAddEditView.showTaskList();
     }
 

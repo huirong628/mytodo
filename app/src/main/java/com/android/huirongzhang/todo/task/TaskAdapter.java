@@ -5,12 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.huirongzhang.todo.ActivityUtils;
 import com.android.huirongzhang.todo.R;
-import com.android.huirongzhang.todo.data.folder.Folder;
 import com.android.huirongzhang.todo.data.task.Task;
 
 import java.util.ArrayList;
@@ -25,7 +23,8 @@ public class TaskAdapter extends BaseAdapter {
     private List<Task> mTasks;
 
     private boolean mEditMode = false;
-    ;
+
+    private TaskItemListener mItemListener;
 
     private static HashMap<Integer, Boolean> mIsSelected;//保存是否选中的状态
 
@@ -50,6 +49,11 @@ public class TaskAdapter extends BaseAdapter {
             mIsSelected.put(mTasks.get(i).getId(), false);
         }
         notifyDataSetChanged();
+    }
+
+    public void setItemListener(TaskItemListener itemListener) {
+
+        mItemListener = itemListener;
     }
 
     @Override
@@ -107,19 +111,10 @@ public class TaskAdapter extends BaseAdapter {
                         mDeleteTasks.add(task);
                     }
 
-                    //mItemListener.onFolderDelete(mDeleteTasks);
+                    mItemListener.onTaskDelete(mDeleteTasks);
                 }
             });
-            //  viewHolder.editCBView.setChecked(mIsSelected.get(folder.getId()));
-            viewHolder.contentView.setClickable(true);
-            viewHolder.contentView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    //rename folder
-                    //  mItemListener.onFolderUpdate(folder);
-                }
-            });
+            viewHolder.editCBView.setChecked(mIsSelected.get(task.getId()));
         } else {
             view.setClickable(true);
             viewHolder.contentView.setClickable(false);
@@ -130,7 +125,7 @@ public class TaskAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     //open folder
-                    // mItemListener.onFolderClick(folder);
+                    mItemListener.onTaskClick(task);
                 }
             });
         }

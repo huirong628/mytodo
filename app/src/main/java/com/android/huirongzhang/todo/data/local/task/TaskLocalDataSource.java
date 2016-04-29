@@ -88,4 +88,20 @@ public class TaskLocalDataSource extends LocalDataSource implements TaskDataSour
             callback.onTasksLoaded(tasks);
         }
     }
+
+    @Override
+    public void updateTask(String content, int taskId) {
+        SQLiteDatabase db = mDBHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(TaskContract.TaskEntry.COLUMN_NAME_CONTENT, content);
+        values.put(TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID, taskId);
+        values.put(TaskContract.TaskEntry.COLUMN_NAME_DATE, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+
+        String whereClause = TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + " = " + taskId;
+
+        db.update(TaskContract.TaskEntry.TABLE_NAME, values, whereClause, null);
+
+        db.close();
+    }
 }

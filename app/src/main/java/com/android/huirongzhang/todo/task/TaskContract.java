@@ -20,6 +20,8 @@ public interface TaskContract {
         void showFilteringPopUpMenu();
 
         void showAddTask();
+
+        void showTaskDetails(Task task);
     }
 
     interface Presenter extends BasePresenter {
@@ -27,5 +29,7 @@ public interface TaskContract {
         void loadTasks(int folderId);
 
         void setAction(TaskFilterType requestType);
+
+        void openTaskDetails(Task task);
     }
 }

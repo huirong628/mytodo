@@ -18,8 +18,11 @@ import com.android.huirongzhang.todo.task.TaskFragment;
 public class AddEditActivity extends AppCompatActivity {
 
     public static final int REQUEST_ADD_TASK = 1;
+    public static final int REQUEST_UPDATE_TASK = 2;
 
     public static final String EXTRA_FOLDER_ID = "FOLDER_ID";
+    public static final String EXTRA_TASK_CONTENT = "TASK_CONTENT";
+    public static final String EXTRA_TASK_ID = "TASK_ID";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,8 +40,13 @@ public class AddEditActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putInt(AddEditFragment.ARGUMENT_FOLDER_ID, folderId);
                 addEditStudyFragment.setArguments(bundle);
-            } else {
-                //
+            } else if (getIntent().hasExtra(AddEditActivity.EXTRA_TASK_ID)) {
+                int taskId = getIntent().getIntExtra(EXTRA_TASK_ID, 0);
+                String taskContent = getIntent().getStringExtra(EXTRA_TASK_CONTENT);
+                Bundle bundle = new Bundle();
+                bundle.putInt(AddEditFragment.ARGUMENT_TASK_ID, taskId);
+                bundle.putString(AddEditFragment.ARGUMENT_TASK_CONTENT, taskContent);
+                addEditStudyFragment.setArguments(bundle);
             }
         }
         // Create the presenter

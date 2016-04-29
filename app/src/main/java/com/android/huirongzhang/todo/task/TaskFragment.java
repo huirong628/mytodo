@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.huirongzhang.todo.R;
 import com.android.huirongzhang.todo.data.task.Task;
@@ -44,6 +45,8 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
 
     private ImageView mCreateView;
 
+    private TextView mDeleteView;
+
     private MenuItem mMenuItem;
 
     boolean mEditMode = false;
@@ -65,6 +68,7 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListAdapter = new TaskAdapter(new ArrayList<Task>(0));
+        mListAdapter.setItemListener(mItemListener);
     }
 
     @Nullable
@@ -74,6 +78,10 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
 
         mCreateView = (ImageView) root.findViewById(R.id.task_create);
         mCreateView.setOnClickListener(this);
+
+        mDeleteView = (TextView) root.findViewById(R.id.task_delete);
+        mDeleteView.setClickable(false);
+        mDeleteView.setOnClickListener(this);
 
         //set up tasks view
         ListView listView = (ListView) root.findViewById(R.id.tasks_list);
@@ -124,7 +132,7 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
                 showCreateView();
             } else {
                 topTitle = getString(R.string.title_done);
-                //showDeleteView();
+                showDeleteView();
             }
             mEditMode = !mEditMode;
             item.setTitle(topTitle);
@@ -135,7 +143,7 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
 
     @Override
     public void showFilteringPopUpMenu() {
-        PopupMenu popup = new PopupMenu(getActivity(), getActivity().findViewById(R.id.menu_task_filter));
+        PopupMenu popup = new PopupMenu(getActivity(), getActivity().findViewById(R.id.menu_folder_edit));
         popup.getMenuInflater().inflate(R.menu.menu_study_filter_tasks, popup.getMenu());
         setIconEnable(popup);
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -198,6 +206,31 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
         startActivityForResult(intent, AddEditActivity.REQUEST_ADD_TASK);
     }
 
+    @Override
+    public void showTaskDetails(Task task) {
+        Intent intent = new Intent(getActivity(), AddEditActivity.class);
+        intent.putExtra(AddEditActivity.EXTRA_TASK_CONTENT, task.getContent());
+        intent.putExtra(AddEditActivity.EXTRA_TASK_ID, task.getId());
+        startActivityForResult(intent, AddEditActivity.REQUEST_UPDATE_TASK);
+    }
+
+    private TaskItemListener mItemListener = new TaskItemListener() {
+        @Override
+        public void onTaskClick(Task task) {
+            mPresenter.openTaskDetails(task);
+        }
+
+        @Override
+        public void onTaskDelete(List<Task> tasks) {
+
+        }
+
+        @Override
+        public void onTaskUpdate(Task task) {
+
+        }
+    };
+
     private void setFolderId() {
         if (getArguments() != null && getArguments().containsKey(ARGUMENT_FOLDER_ID)) {
             mFolderId = getArguments().getInt(ARGUMENT_FOLDER_ID);
@@ -205,6 +238,12 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
     }
 
     private void showCreateView() {
+        mDeleteView.setVisibility(View.GONE);
+        mCreateView.setVisibility(View.VISIBLE);
+    }
+
+    private void showDeleteView() {
+        mDeleteView.setVisibility(View.VISIBLE);
         mCreateView.setVisibility(View.GONE);
     }
 }

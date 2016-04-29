@@ -14,18 +14,23 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.android.huirongzhang.todo.R;
+import com.android.huirongzhang.todo.data.task.Task;
 
 /**
  * Created by zhanghuirong on 2016/4/11.
  */
 public class AddEditFragment extends Fragment implements AddEditContract.View {
     public static final String ARGUMENT_FOLDER_ID = "FOLDER_ID";
+    public static final String ARGUMENT_TASK_ID = "TASK_ID";
+    public static final String ARGUMENT_TASK_CONTENT = "TASK_CONTENT";
 
     private AddEditContract.Presenter mPresenter;
 
     private EditText mTaskContent;
 
     private int mFolderId;
+
+    private int mTaskId;
 
     public static AddEditFragment newInstance() {
         return new AddEditFragment();
@@ -59,6 +64,7 @@ public class AddEditFragment extends Fragment implements AddEditContract.View {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setFolderId();
+        setTask();
     }
 
     @Override
@@ -121,7 +127,11 @@ public class AddEditFragment extends Fragment implements AddEditContract.View {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_task_add:
-                mPresenter.addTask(mTaskContent.getText().toString(), mFolderId);
+                if (mTaskId != 0) {
+                    mPresenter.updateTask(mTaskContent.getText().toString(), mTaskId);
+                } else {
+                    mPresenter.addTask(mTaskContent.getText().toString(), mFolderId);
+                }
                 break;
         }
         return true;
@@ -136,6 +146,15 @@ public class AddEditFragment extends Fragment implements AddEditContract.View {
     private void setFolderId() {
         if (getArguments() != null && getArguments().containsKey(ARGUMENT_FOLDER_ID)) {
             mFolderId = getArguments().getInt(ARGUMENT_FOLDER_ID);
+        }
+    }
+
+    private void setTask() {
+        if (getArguments() != null && getArguments().containsKey(ARGUMENT_TASK_ID)) {
+            mTaskId = getArguments().getInt(ARGUMENT_TASK_ID);
+            String taskContent = getArguments().getString(ARGUMENT_TASK_CONTENT);
+            mTaskContent.setText(taskContent);
+            mTaskContent.setSelection(mTaskContent.getText().length());
         }
     }
 }
