@@ -89,7 +89,15 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
                 break;
             case R.id.folder_delete:
                 //执行删除操作
-                mPresenter.deleteFolder(mDeleteFolders);
+                int i = 0;
+                for (i = 0; i < mDeleteFolders.size(); i++) {
+                    if (mDeleteFolders.get(i).getCount() > 0) {
+                        showDeleteErrorDialog();
+                    }
+                }
+                if (i == mDeleteFolders.size()) {
+                    mPresenter.deleteFolder(mDeleteFolders);
+                }
                 break;
             default:
                 break;
@@ -174,6 +182,12 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
     @Override
     public void showFolderList() {
         //refresh list
+
+        mPresenter.loadFolders(false);
+    }
+
+    @Override
+    public void showFolders(List<Folder> folders) {
         if (mEditMode) {
             mListAdapter.showEditMode(false);
             mEditMode = false;
@@ -181,11 +195,6 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
             showNewFolderView();
         }
         setHasOptionsMenu(true);
-        mPresenter.loadFolders(false);
-    }
-
-    @Override
-    public void showFolders(List<Folder> folders) {
         mListAdapter.replaceData(folders);
     }
 
@@ -199,6 +208,7 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
         }
         //show no folders
         setHasOptionsMenu(false);
+        //  mListAdapter.replaceData(null);
     }
 
     @Override
@@ -266,6 +276,24 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
                         mPresenter.updateFolder(folder.getId(), folderName.getText().toString());//参数:内容
                     }
                 })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();// to remove the dialog from view,so not use the dialog.cancel();
+                    }
+                });
+        builder.setCancelable(false);//Sets the dialog is not cancelable.
+        builder.show();
+    }
+
+    private void showDeleteErrorDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        // Get the layout inflater
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_delete_folder, null);
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(view)
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();// to remove the dialog from view,so not use the dialog.cancel();
