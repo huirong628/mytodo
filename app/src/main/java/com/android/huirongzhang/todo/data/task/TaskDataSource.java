@@ -21,4 +21,6 @@ public interface TaskDataSource {
     void getTasks(LoadTasksCallback callback, int folderId);
 
     void updateTask(String content, int taskId);
+
+    void deleteTask(List<Task> tasks);
 }

@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.android.huirongzhang.todo.ActivityUtils;
 import com.android.huirongzhang.todo.R;
+import com.android.huirongzhang.todo.data.folder.FolderRepository;
+import com.android.huirongzhang.todo.data.local.folder.FolderLocalDataSource;
 import com.android.huirongzhang.todo.data.local.task.TaskLocalDataSource;
 import com.android.huirongzhang.todo.data.task.TaskRepository;
 
@@ -45,7 +47,7 @@ public class TaskActivity extends AppCompatActivity {
             }
         }
 
-        new TaskPresenter(taskFragment, TaskRepository.getInstance(TaskLocalDataSource.getInstance(this)));
+        new TaskPresenter(taskFragment, TaskRepository.getInstance(TaskLocalDataSource.getInstance(this)), FolderRepository.getInstance(FolderLocalDataSource.getInstance(this)));
 
         // Create the presenter
 //        new TaskDetailPresenter(

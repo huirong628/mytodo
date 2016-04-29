@@ -104,4 +104,16 @@ public class TaskLocalDataSource extends LocalDataSource implements TaskDataSour
 
         db.close();
     }
+
+    @Override
+    public void deleteTask(List<Task> tasks) {
+        SQLiteDatabase db = mDBHelper.getWritableDatabase();
+        String whereClause = TaskContract.TaskEntry.COLUMN_NAME_ENTRY_ID + "=?";
+        int length = tasks.size();
+        for (int i = 0; i < length; i++) {
+            String[] whereArgs = new String[]{tasks.get(i).getId() + ""};
+            db.delete(TaskContract.TaskEntry.TABLE_NAME, whereClause, whereArgs);
+        }
+        db.close();
+    }
 }

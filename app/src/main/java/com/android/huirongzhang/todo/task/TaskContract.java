@@ -31,5 +31,7 @@ public interface TaskContract {
         void setAction(TaskFilterType requestType);
 
         void openTaskDetails(Task task);
+
+        void deleteTask(List<Task> tasks, int folderId);
     }
 }

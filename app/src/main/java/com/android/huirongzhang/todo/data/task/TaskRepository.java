@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.android.huirongzhang.todo.data.local.task.TaskLocalDataSource;
 
+import java.util.List;
+
 /**
  * Created by zhanghuirong on 2016/4/13.
  */
@@ -38,5 +40,10 @@ public class TaskRepository implements TaskDataSource {
     @Override
     public void updateTask(String content, int taskId) {
         mTaskLocalDataSource.updateTask(content, taskId);
+    }
+
+    @Override
+    public void deleteTask(List<Task> tasks) {
+        mTaskLocalDataSource.deleteTask(tasks);
     }
 }

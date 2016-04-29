@@ -49,6 +49,6 @@ public class AddEditPresenter implements AddEditContract.Presenter {
 
     //更新folder的字段count
     private void updateFolder(int folderId) {
-        mFolderDataSource.updateFolder(folderId);
+        mFolderDataSource.updateFolder(folderId, 1);
     }
 }

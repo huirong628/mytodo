@@ -192,6 +192,12 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
 
     @Override
     public void showNoFolders() {
+        if (mEditMode) {
+            mListAdapter.showEditMode(false);
+            mEditMode = false;
+            mMenuItem.setTitle(R.string.title_edit);
+            showNewFolderView();
+        }
         //show no folders
     }
 

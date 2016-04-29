@@ -2,6 +2,7 @@ package com.android.huirongzhang.todo.task;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.huirongzhang.todo.R;
+import com.android.huirongzhang.todo.data.folder.Folder;
 import com.android.huirongzhang.todo.data.task.Task;
 import com.android.huirongzhang.todo.task.add.AddEditActivity;
 
@@ -50,6 +52,8 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
     private MenuItem mMenuItem;
 
     boolean mEditMode = false;
+
+    private List<Task> mDeleteTasks;//要删除的task
 
     public static TaskFragment newInstance() {
         return new TaskFragment();
@@ -113,6 +117,8 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
     public void onClick(View view) {
         if (view.getId() == R.id.task_create) {
             mPresenter.setAction(TaskFilterType.TASK_ADD);
+        } else if (view.getId() == R.id.task_delete) {
+            mPresenter.deleteTask(mDeleteTasks, mFolderId);
         }
     }
 
@@ -188,12 +194,24 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
 
     @Override
     public void showNoTasks() {
+        if (mEditMode) {
+            mListAdapter.showEditMode(false);
+            mEditMode = false;
+            mMenuItem.setTitle(R.string.title_edit);
+            showCreateView();
+        }
         mTasksView.setVisibility(View.GONE);
         mNoTasksView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showTasks(List<Task> tasks) {
+        if (mEditMode) {
+            mListAdapter.showEditMode(false);
+            mEditMode = false;
+            mMenuItem.setTitle(R.string.title_edit);
+            showCreateView();
+        }
         mTasksView.setVisibility(View.VISIBLE);
         mNoTasksView.setVisibility(View.GONE);
         mListAdapter.setData(tasks);
@@ -222,7 +240,14 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
 
         @Override
         public void onTaskDelete(List<Task> tasks) {
-
+            mDeleteTasks = tasks;
+            if (mDeleteTasks.size() == 0) {
+                mDeleteView.setTextColor(Color.GRAY);
+                mDeleteView.setClickable(false);
+            } else {
+                mDeleteView.setTextColor(Color.WHITE);
+                mDeleteView.setClickable(true);
+            }
         }
 
         @Override

@@ -101,12 +101,16 @@ public class FolderLocalDataSource implements FolderDataSource {
     }
 
     @Override
-    public void updateFolder(@NonNull int id) {
+    public void updateFolder(@NonNull int id, int type) {
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(FolderEntry.COLUMN_NAME_ENTRY_ID, id);
-        values.put(FolderEntry.COLUMN_NAME_COUNT, getFolder(id).getCount() + 1);
+        if (type == 0) {//0代表删除操作
+            values.put(FolderEntry.COLUMN_NAME_COUNT, getFolder(id).getCount() - 1);
+        } else {//1代表增加操作
+            values.put(FolderEntry.COLUMN_NAME_COUNT, getFolder(id).getCount() + 1);
+        }
         String whereClause = FolderEntry.COLUMN_NAME_ENTRY_ID + "=" + id;
         String[] whereArgs = null;
         db.update(FolderEntry.TABLE_NAME, values, whereClause, whereArgs);

@@ -1,5 +1,6 @@
 package com.android.huirongzhang.todo.task;
 
+import com.android.huirongzhang.todo.data.folder.FolderDataSource;
 import com.android.huirongzhang.todo.data.task.Task;
 import com.android.huirongzhang.todo.data.task.TaskDataSource;
 
@@ -14,9 +15,12 @@ public class TaskPresenter implements TaskContract.Presenter {
 
     private TaskDataSource mTaskDataSource;
 
-    public TaskPresenter(TaskContract.View taskView, TaskDataSource taskDataSource) {
+    private FolderDataSource mFolderDataSource;
+
+    public TaskPresenter(TaskContract.View taskView, TaskDataSource taskDataSource, FolderDataSource folderDataSource) {
         mTaskView = taskView;
         mTaskDataSource = taskDataSource;
+        mFolderDataSource = folderDataSource;
         mTaskView.setPresenter(this);
     }
 
@@ -45,6 +49,13 @@ public class TaskPresenter implements TaskContract.Presenter {
         mTaskView.showTaskDetails(task);
     }
 
+    @Override
+    public void deleteTask(List<Task> tasks, int folderId) {
+        mTaskDataSource.deleteTask(tasks);
+        updateFolder(folderId);//更新数量
+        loadTasks(true, folderId);
+    }
+
     public void loadTasks(boolean forceUpdate, int folderId) {
         mTaskDataSource.getTasks(new TaskDataSource.LoadTasksCallback() {
             @Override
@@ -57,5 +68,10 @@ public class TaskPresenter implements TaskContract.Presenter {
                 mTaskView.showNoTasks();
             }
         }, folderId);
+    }
+
+    //更新folder的字段count
+    private void updateFolder(int folderId) {
+        mFolderDataSource.updateFolder(folderId, 0);
     }
 }
