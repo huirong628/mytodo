@@ -1,20 +1,21 @@
 <resources>
-	<string name="app_name">todo</string>
+    <string name="app_name">todo</string>
 
-	<string name="study_page_title">Study</string>
-	<string name="work_page_title">Work</string>
-	<string name="life_page_title">Life</string>
-	<string name="me_page_title">Me</string>
+    <string name="study_page_title">Study</string>
+    <string name="work_page_title">Work</string>
+    <string name="life_page_title">Life</string>
+    <string name="me_page_title">Me</string>
 
-	<string name="title_study_task_add">Add</string>
-	<string name="title_study_task_completed">Completed</string>
-	<string name="title_study_task_delete">Delete</string>
-	<string name="save">Save</string>
-	<string name="cancel">Cancel</string>
-	<!--folder menu-->
-	<string name="title_folder_add">New Folder</string>
-	<string name="title_edit">Edit</string>
-	<string name="title_delete">Delete</string>
-	<string name="title_done">Done</string>
-	<string name="dialog_content">Enter a new name for this folder.</string>
+    <string name="title_study_task_add">Add</string>
+    <string name="title_study_task_completed">Completed</string>
+    <string name="title_study_task_delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <!--folder menu-->
+    <string name="title_folder_add">New Folder</string>
+    <string name="title_edit">Edit</string>
+    <string name="title_delete">Delete</string>
+    <string name="title_done">Done</string>
+    <string name="dialog_content">Enter a new name for this folder.</string>
+    <string name="reward_value"><![CDATA[获得<font color="#FE5454">%1$d</font>个赞]]></string>
 </resources>
