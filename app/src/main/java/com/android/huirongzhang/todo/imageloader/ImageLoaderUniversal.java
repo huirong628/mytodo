@@ -89,5 +89,22 @@ public class ImageLoaderUniversal {
         ImageLoader.getInstance().clearMemoryCache();
     }
 
+    /**
+     * 图片进行文件缓存
+     *
+     * @param url
+     * @param bitmap
+     */
+    public void putDiskCacheImage(String url, Bitmap bitmap) {
 
+    }
+
+    /**
+     * 从文件缓存中获取图片
+     *
+     * @param url
+     */
+    public void getDiskCacheImage(String url) {
+
+    }
 }
