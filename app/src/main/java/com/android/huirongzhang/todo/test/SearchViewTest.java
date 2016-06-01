@@ -2,6 +2,8 @@ package com.android.huirongzhang.todo.test;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.android.huirongzhang.todo.R;
 import com.android.huirongzhang.todo.searchview.SearchAdapter;
@@ -16,12 +18,15 @@ import java.util.List;
  */
 public class SearchViewTest extends Activity {
 
+    private ImageView mOpenSearch;
     private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_search_view);
+
+        mOpenSearch = (ImageView) findViewById(R.id.search_open);
 
         mSearchView = (SearchView) findViewById(R.id.search_view);
 
@@ -31,13 +36,13 @@ public class SearchViewTest extends Activity {
 
         mSearchView.setOnQueryChangeListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
+            public void onQueryTextChange(String newText) {
+
             }
 
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
+            public void onQueryTextSubmit(String query) {
+
             }
         });
 
@@ -49,12 +54,21 @@ public class SearchViewTest extends Activity {
         SearchAdapter adapter = new SearchAdapter(this, suggestionList);
 
         mSearchView.setSearchAdapter(adapter);
+
+        mOpenSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSearchView.setVisibility(View.VISIBLE);
+                mOpenSearch.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
-        if (mSearchView != null && mSearchView.isSearchOpen()) {
-            mSearchView.close(true);
+        if (mSearchView.getVisibility() == View.VISIBLE) {
+            mSearchView.setVisibility(View.GONE);
+            mOpenSearch.setVisibility(View.VISIBLE);
         } else {
             super.onBackPressed();
         }

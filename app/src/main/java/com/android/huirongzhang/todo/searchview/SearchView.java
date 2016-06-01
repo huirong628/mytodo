@@ -2,6 +2,7 @@ package com.android.huirongzhang.todo.searchview;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,7 +30,7 @@ public class SearchView extends FrameLayout implements View.OnClickListener {
     public static final int VERSION_MENU_ITEM = 1001;
     public static final int VERSION_MARGINS_TOOLBAR_BIG = 1002;
 
-    private Context mContext;
+    private final Context mContext;
 
     private ImageView mBackView;
     private EditText mInputView;
@@ -47,6 +48,9 @@ public class SearchView extends FrameLayout implements View.OnClickListener {
     private String mOldUserQuery;
 
     private int mVersion = VERSION_TOOLBAR;
+    /**
+     * 获取焦点的时候设置为true,否则设置为false.
+     */
     private boolean mIsSearchOpen = false;
 
     private SearchArrowDrawable mSearchArrow;
@@ -60,10 +64,10 @@ public class SearchView extends FrameLayout implements View.OnClickListener {
     }
 
     public SearchView(Context context, AttributeSet attrs, int defStyleAttr) {
-        //this(context, attrs, defStyleAttr, 0);
         super(context, attrs, defStyleAttr);
         mContext = context;
         initView();
+        initStyle(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -71,12 +75,14 @@ public class SearchView extends FrameLayout implements View.OnClickListener {
         super(context, attrs, defStyleAttr, defStyleRes);
         mContext = context;
         initView();
+        initStyle(attrs, defStyleAttr);
     }
 
     private void initView() {
         LayoutInflater.from(mContext).inflate(R.layout.search_view, this, true);//该SearchView就是root
 
         mBackView = (ImageView) findViewById(R.id.image_back);
+
         mInputView = (EditText) findViewById(R.id.edit_input);
 
         mClearView = (ImageView) findViewById(R.id.image_clear);
@@ -139,6 +145,23 @@ public class SearchView extends FrameLayout implements View.OnClickListener {
         setVersion(mVersion);
     }
 
+    /**
+     * @param attrs
+     * @param defStyleAttr
+     */
+    private void initStyle(AttributeSet attrs, int defStyleAttr) {
+        TypedArray attr = mContext.obtainStyledAttributes(attrs, R.styleable.SearchView, defStyleAttr, 0);
+        if (attr != null) {
+            if (attr.hasValue(R.styleable.SearchView_search_version)) {
+                setVersion(attr.getInt(R.styleable.SearchView_search_version, VERSION_TOOLBAR));
+            }
+            if (attr.hasValue(R.styleable.SearchView_search_divider)) {
+                setDivider(attr.getBoolean(R.styleable.SearchView_search_divider, false));
+            }
+            attr.recycle();// Be sure to call this method when done with them.
+        }
+    }
+
     private void onSubmitQuery() {
         CharSequence query = mInputView.getText();
         mOnQueryChangeListener.onQueryTextSubmit(query.toString());
@@ -192,6 +215,14 @@ public class SearchView extends FrameLayout implements View.OnClickListener {
         }
     }
 
+    private void setDivider(boolean divider) {
+        if (divider) {
+            mRecyclerView.addItemDecoration(new SearchDivider(mContext));
+        } else {
+            mRecyclerView.removeItemDecoration(new SearchDivider(mContext));
+        }
+    }
+
     public void setVersionMargins(int versionMargins) {
 //        CardView.LayoutParams params = new CardView.LayoutParams(
 //                CardView.LayoutParams.MATCH_PARENT,
@@ -240,9 +271,9 @@ public class SearchView extends FrameLayout implements View.OnClickListener {
     }
 
     public interface OnQueryTextListener {
-        boolean onQueryTextChange(String newText);
+        void onQueryTextChange(String newText);
 
-        boolean onQueryTextSubmit(String query);
+        void onQueryTextSubmit(String query);
     }
 
     @Override
