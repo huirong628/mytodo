@@ -42,7 +42,7 @@ public class SearchView extends FrameLayout implements View.OnClickListener {
     private View mDividerView;
 
     private CharSequence mUserQuery;
-    private SearchAdapter mSearchAdapter;
+    private BaseAdapter<SearchItem> mSearchAdapter;
 
     private OnQueryTextListener mOnQueryChangeListener = null;
     private String mOldUserQuery;
@@ -189,7 +189,7 @@ public class SearchView extends FrameLayout implements View.OnClickListener {
         mOnQueryChangeListener = listener;
     }
 
-    public void setSearchAdapter(SearchAdapter adapter) {
+    public void setSearchAdapter(BaseAdapter<SearchItem> adapter) {
         mSearchAdapter = adapter;
         mRecyclerView.setAdapter(mSearchAdapter);
     }

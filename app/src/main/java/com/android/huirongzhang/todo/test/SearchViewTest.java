@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.android.huirongzhang.todo.R;
+import com.android.huirongzhang.todo.searchview.BaseAdapter;
 import com.android.huirongzhang.todo.searchview.SearchAdapter;
 import com.android.huirongzhang.todo.searchview.SearchItem;
 import com.android.huirongzhang.todo.searchview.SearchView;
@@ -51,7 +52,8 @@ public class SearchViewTest extends Activity {
         suggestionList.add(new SearchItem("search2"));
         suggestionList.add(new SearchItem("search3"));
 
-        SearchAdapter adapter = new SearchAdapter(this, suggestionList);
+        BaseAdapter<SearchItem> adapter = new SearchAdapter();
+        adapter.refreshData(suggestionList);
 
         mSearchView.setSearchAdapter(adapter);
 

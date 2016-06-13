@@ -13,10 +13,10 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/search_height"
             android:focusableInTouchMode="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
             <ImageView
                 android:id="@+id/image_back"
@@ -62,6 +62,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView_result"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp" />
     </LinearLayout>
 </merge>
