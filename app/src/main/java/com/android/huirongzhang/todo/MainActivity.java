@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActivityUtils.setColor(this, getResources().getColor(R.color.colorPrimary));
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         PagerAdapter pagerAdapter = new FixedTabsPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(pagerAdapter);
