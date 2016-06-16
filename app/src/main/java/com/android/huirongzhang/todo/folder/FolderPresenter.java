@@ -41,8 +41,8 @@ public class FolderPresenter implements FolderContract.Presenter {
     @Override
     public void loadFolders(boolean forceUpdate) {
         // Simplification for sample: a network reload will be forced on first load.
-        loadFolders(forceUpdate || mFirstLoad, true);
-        mFirstLoad = false;
+        loadFolders(forceUpdate, true);
+        //mFirstLoad = false;
     }
 
     @Override

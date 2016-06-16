@@ -18,18 +18,12 @@ public class FolderActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_folder);
 
-        FolderFragment fragment = (FolderFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        FolderFragment fragment = null;// = (FolderFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
         if (fragment == null) {
             fragment = FolderFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.contentFrame);
         }
         new FolderPresenter(fragment, FolderRepository.getInstance(FolderLocalDataSource.getInstance(this)));
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
     }
 }

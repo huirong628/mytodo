@@ -89,15 +89,7 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
                 break;
             case R.id.folder_delete:
                 //执行删除操作
-                int i = 0;
-                for (i = 0; i < mDeleteFolders.size(); i++) {
-                    if (mDeleteFolders.get(i).getCount() > 0) {
-                        showDeleteErrorDialog();
-                    }
-                }
-                if (i == mDeleteFolders.size()) {
-                    mPresenter.deleteFolder(mDeleteFolders);
-                }
+                doDeleteFolder();
                 break;
             default:
                 break;
@@ -301,6 +293,16 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
                 });
         builder.setCancelable(false);//Sets the dialog is not cancelable.
         builder.show();
+    }
+
+    private void doDeleteFolder() {
+        for (int i = 0; i < mDeleteFolders.size(); i++) {
+            if (mDeleteFolders.get(i).getCount() > 0) {
+                showDeleteErrorDialog();
+                return;
+            }
+        }
+        mPresenter.deleteFolder(mDeleteFolders);
     }
 
     /**

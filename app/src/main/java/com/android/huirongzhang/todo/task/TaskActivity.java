@@ -30,7 +30,7 @@ public class TaskActivity extends AppCompatActivity {
 
         // Get the requested folder id
 
-        TaskFragment taskFragment = (TaskFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        TaskFragment taskFragment = null;//(TaskFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
         if (taskFragment == null) {
             taskFragment = TaskFragment.newInstance();

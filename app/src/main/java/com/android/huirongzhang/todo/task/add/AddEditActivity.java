@@ -29,7 +29,7 @@ public class AddEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        AddEditFragment addEditStudyFragment = (AddEditFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        AddEditFragment addEditStudyFragment = null;//(AddEditFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
         if (addEditStudyFragment == null) {
             addEditStudyFragment = AddEditFragment.newInstance();
