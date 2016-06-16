@@ -3,6 +3,7 @@ package com.android.huirongzhang.todo.task;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.android.huirongzhang.todo.ActivityUtils;
 import com.android.huirongzhang.todo.R;
@@ -58,8 +59,12 @@ public class TaskActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        this.finish();
-        return true;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:// 点击返回图标事件
+                this.finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

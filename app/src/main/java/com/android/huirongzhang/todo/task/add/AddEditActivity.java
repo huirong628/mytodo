@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.android.huirongzhang.todo.ActivityUtils;
 import com.android.huirongzhang.todo.R;
@@ -65,5 +66,15 @@ public class AddEditActivity extends AppCompatActivity {
         // Create the presenter
         new AddEditPresenter(addEditStudyFragment, TaskRepository.getInstance(TaskLocalDataSource.getInstance(this)), FolderRepository.getInstance(FolderLocalDataSource.getInstance(this)));
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:// 点击返回图标事件
+                this.finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
