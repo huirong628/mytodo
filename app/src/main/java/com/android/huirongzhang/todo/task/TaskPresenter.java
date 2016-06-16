@@ -17,6 +17,8 @@ public class TaskPresenter implements TaskContract.Presenter {
 
     private FolderDataSource mFolderDataSource;
 
+    private int mTaskCount = 0;
+
     public TaskPresenter(TaskContract.View taskView, TaskDataSource taskDataSource, FolderDataSource folderDataSource) {
         mTaskView = taskView;
         mTaskDataSource = taskDataSource;
@@ -52,26 +54,28 @@ public class TaskPresenter implements TaskContract.Presenter {
     @Override
     public void deleteTask(List<Task> tasks, int folderId) {
         mTaskDataSource.deleteTask(tasks);
-        updateFolder(folderId);//更新数量
         loadTasks(true, folderId);
+        updateFolder(folderId);//更新数量
     }
 
     public void loadTasks(boolean forceUpdate, int folderId) {
         mTaskDataSource.getTasks(new TaskDataSource.LoadTasksCallback() {
             @Override
             public void onTasksLoaded(List<Task> tasks) {
+                mTaskCount = tasks.size();
                 mTaskView.showTasks(tasks);
             }
 
             @Override
             public void onDataNotAvailable() {
+                mTaskCount = 0;
                 mTaskView.showNoTasks();
             }
         }, folderId);
     }
 
     //更新folder的字段count
-    private void updateFolder(int folderId) {
-        mFolderDataSource.updateFolder(folderId, 0);
+    private void updateFolder(final int folderId) {
+        mFolderDataSource.updateFolder(folderId, 0, mTaskCount);
     }
 }

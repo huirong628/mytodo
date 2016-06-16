@@ -43,8 +43,8 @@ public class FolderRepository implements FolderDataSource {
     }
 
     @Override
-    public void updateFolder(@NonNull int id, int type) {
-        mFolderLocalDataSource.updateFolder(id, type);
+    public void updateFolder(@NonNull int id, int type, int taskCount) {
+        mFolderLocalDataSource.updateFolder(id, type, taskCount);
     }
 
     @Override

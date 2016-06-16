@@ -22,7 +22,7 @@ public interface FolderDataSource {
 
     void updateFolder(@NonNull int id, @NonNull String title);
 
-    void updateFolder(@NonNull int id, int type);
+    void updateFolder(@NonNull int id, int type, int taskCount);
 
     void deleteFolder(@NonNull List<Folder> folders);
 }

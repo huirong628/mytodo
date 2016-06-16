@@ -101,13 +101,13 @@ public class FolderLocalDataSource implements FolderDataSource {
     }
 
     @Override
-    public void updateFolder(@NonNull int id, int type) {
+    public void updateFolder(@NonNull int id, int type, int taskCount) {
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(FolderEntry.COLUMN_NAME_ENTRY_ID, id);
         if (type == 0) {//0代表删除操作
-            values.put(FolderEntry.COLUMN_NAME_COUNT, getFolder(id).getCount() - 1);
+            values.put(FolderEntry.COLUMN_NAME_COUNT, taskCount);//删除个数问题,重新获取id文件夹下task的数量
         } else {//1代表增加操作
             values.put(FolderEntry.COLUMN_NAME_COUNT, getFolder(id).getCount() + 1);
         }
