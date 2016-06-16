@@ -33,6 +33,8 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
 
     private ListView mListView;
 
+    private View mNoFoldersView;
+
     private FolderAdapter mListAdapter;
 
     private TextView mCreateView;
@@ -60,6 +62,8 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
 
         mListView = (ListView) root.findViewById(R.id.folder_list);
         mListView.setAdapter(mListAdapter);
+
+        mNoFoldersView = root.findViewById(R.id.noFolders);
 
         mCreateView = (TextView) root.findViewById(R.id.folder_create);
         mCreateView.setOnClickListener(this);
@@ -187,6 +191,8 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
             showNewFolderView();
         }
         setHasOptionsMenu(true);
+        mListView.setVisibility(View.VISIBLE);
+        mNoFoldersView.setVisibility(View.GONE);
         mListAdapter.replaceData(folders);
     }
 
@@ -200,6 +206,8 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
         }
         //show no folders
         setHasOptionsMenu(false);
+        mListView.setVisibility(View.GONE);
+        mNoFoldersView.setVisibility(View.VISIBLE);
         //  mListAdapter.replaceData(null);
     }
 

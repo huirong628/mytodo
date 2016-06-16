@@ -184,5 +184,58 @@ public class FolderLocalDataSource implements FolderDataSource {
  at dalvik.system.NativeStart.main(Native Method)
  *
  */
+
+/**
+ * 发生了死循环
+ *
+ * 06-16 11:42:11.368 18679-18679/com.android.huirongzhang.todo E/AndroidRuntime: FATAL EXCEPTION: main
+ Process: com.android.huirongzhang.todo, PID: 18679
+ java.lang.StackOverflowError
+ at java.util.HashMap.secondaryHash(HashMap.java:350)
+ at java.util.LinkedHashMap.get(LinkedHashMap.java:251)
+ at android.util.LruCache.get(LruCache.java:118)
+ at android.database.sqlite.SQLiteConnection.acquirePreparedStatement(SQLiteConnection.java:877)
+ at android.database.sqlite.SQLiteConnection.executeForLong(SQLiteConnection.java:591)
+ at android.database.sqlite.SQLiteConnection.setPageSize(SQLiteConnection.java:251)
+ at android.database.sqlite.SQLiteConnection.open(SQLiteConnection.java:213)
+ at android.database.sqlite.SQLiteConnection.open(SQLiteConnection.java:193)
+ at android.database.sqlite.SQLiteConnectionPool.openConnectionLocked(SQLiteConnectionPool.java:463)
+ at android.database.sqlite.SQLiteConnectionPool.open(SQLiteConnectionPool.java:185)
+ at android.database.sqlite.SQLiteConnectionPool.open(SQLiteConnectionPool.java:177)
+ at android.database.sqlite.SQLiteDatabase.openInner(SQLiteDatabase.java:804)
+ at android.database.sqlite.SQLiteDatabase.open(SQLiteDatabase.java:789)
+ at android.database.sqlite.SQLiteDatabase.openDatabase(SQLiteDatabase.java:694)
+ at android.app.ContextImpl.openOrCreateDatabase(ContextImpl.java:1073)
+ at android.content.ContextWrapper.openOrCreateDatabase(ContextWrapper.java:256)
+ at android.database.sqlite.SQLiteOpenHelper.getDatabaseLocked(SQLiteOpenHelper.java:224)
+ at android.database.sqlite.SQLiteOpenHelper.getReadableDatabase(SQLiteOpenHelper.java:188)
+ at com.android.huirongzhang.todo.data.local.folder.FolderLocalDataSource.getFolders(FolderLocalDataSource.java:54)
+ at com.android.huirongzhang.todo.data.folder.FolderRepository.getFolders(FolderRepository.java:37)
+ at com.android.huirongzhang.todo.folder.FolderPresenter.loadFolders(FolderPresenter.java:85)
+ at com.android.huirongzhang.todo.folder.FolderPresenter.loadFolders(FolderPresenter.java:44)
+ at com.android.huirongzhang.todo.folder.FolderPresenter.start(FolderPresenter.java:27)
+ at com.android.huirongzhang.todo.folder.FolderFragment.showNoFolders(FolderFragment.java:201)
+ at com.android.huirongzhang.todo.folder.FolderPresenter$1.onDataNotAvailable(FolderPresenter.java:94)
+ at com.android.huirongzhang.todo.data.local.folder.FolderLocalDataSource.getFolders(FolderLocalDataSource.java:83)
+ at com.android.huirongzhang.todo.data.folder.FolderRepository.getFolders(FolderRepository.java:37)
+ at com.android.huirongzhang.todo.folder.FolderPresenter.loadFolders(FolderPresenter.java:85)
+ at com.android.huirongzhang.todo.folder.FolderPresenter.loadFolders(FolderPresenter.java:44)
+ at com.android.huirongzhang.todo.folder.FolderPresenter.start(FolderPresenter.java:27)
+ at com.android.huirongzhang.todo.folder.FolderFragment.showNoFolders(FolderFragment.java:201)
+ at com.android.huirongzhang.todo.folder.FolderPresenter$1.onDataNotAvailable(FolderPresenter.java:94)
+ at com.android.huirongzhang.todo.data.local.folder.FolderLocalDataSource.getFolders(FolderLocalDataSource.java:83)
+ at com.android.huirongzhang.todo.data.folder.FolderRepository.getFolders(FolderRepository.java:37)
+ at com.android.huirongzhang.todo.folder.FolderPresenter.loadFolders(FolderPresenter.java:85)
+ at com.android.huirongzhang.todo.folder.FolderPresenter.loadFolders(FolderPresenter.java:44)
+ at com.android.huirongzhang.todo.folder.FolderPresenter.start(FolderPresenter.java:27)
+ at com.android.huirongzhang.todo.folder.FolderFragment.showNoFolders(FolderFragment.java:201)
+ at com.android.huirongzhang.todo.folder.FolderPresenter$1.onDataNotAvailable(FolderPresenter.java:94)
+ at com.android.huirongzhang.todo.data.local.folder.FolderLocalDataSource.getFolders(FolderLocalDataSource.java:83)
+ at com.android.huirongzhang.todo.data.folder.FolderRepository.getFolders(FolderRepository.java:37)
+ at com.android.huirongzhang.todo.folder.FolderPresenter.loadFolders(FolderPresenter.java:85)
+ at com.android.huirongzhang.todo.folder.FolderPresenter.loadFolders(FolderPresenter.java:44)
+ at com.android.huirongzhang.todo.folder.FolderPresenter.start(F
+
+ */
 }
 
