@@ -58,6 +58,11 @@ public class TaskPresenter implements TaskContract.Presenter {
         updateFolder(folderId);//更新数量
     }
 
+    @Override
+    public String getFolderTitle(int folderId) {
+        return mFolderDataSource.getFolderTitle(folderId);
+    }
+
     public void loadTasks(boolean forceUpdate, int folderId) {
         mTaskDataSource.getTasks(new TaskDataSource.LoadTasksCallback() {
             @Override
@@ -78,4 +83,6 @@ public class TaskPresenter implements TaskContract.Presenter {
     private void updateFolder(final int folderId) {
         mFolderDataSource.updateFolder(folderId, 0, mTaskCount);
     }
+
+
 }

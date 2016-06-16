@@ -25,4 +25,6 @@ public interface FolderDataSource {
     void updateFolder(@NonNull int id, int type, int taskCount);
 
     void deleteFolder(@NonNull List<Folder> folders);
+
+    String getFolderTitle(int folderId);
 }

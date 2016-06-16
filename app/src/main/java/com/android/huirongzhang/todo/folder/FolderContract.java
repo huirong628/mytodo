@@ -20,7 +20,7 @@ public interface FolderContract {
 
         void showNoFolders();
 
-        void showFolderDetailsUi(int id);
+        void showFolderDetailsUi(Folder folder);
     }
 
     interface Presenter extends BasePresenter {

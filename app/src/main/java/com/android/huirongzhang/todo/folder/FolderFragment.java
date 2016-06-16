@@ -212,9 +212,10 @@ public class FolderFragment extends Fragment implements FolderContract.View, Vie
     }
 
     @Override
-    public void showFolderDetailsUi(int folderId) {
+    public void showFolderDetailsUi(Folder folder) {
         Intent intent = new Intent(getActivity(), TaskActivity.class);
-        intent.putExtra(TaskActivity.EXTRA_FOLDER_ID, folderId);
+        intent.putExtra(TaskActivity.EXTRA_FOLDER_ID, folder.getId());
+        intent.putExtra(TaskActivity.EXTRA_FOLDER_TITLE, folder.getTitle());
         startActivity(intent);
     }
 

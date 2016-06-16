@@ -2,6 +2,7 @@ package com.android.huirongzhang.todo.task.add;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.android.huirongzhang.todo.ActivityUtils;
@@ -21,6 +22,7 @@ public class AddEditActivity extends AppCompatActivity {
     public static final int REQUEST_UPDATE_TASK = 2;
 
     public static final String EXTRA_FOLDER_ID = "FOLDER_ID";
+    public static final String EXTRA_FOLDER_TITLE = "FOLDER_TITLE";
     public static final String EXTRA_TASK_CONTENT = "TASK_CONTENT";
     public static final String EXTRA_TASK_ID = "TASK_ID";
 
@@ -29,12 +31,22 @@ public class AddEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+
         AddEditFragment addEditStudyFragment = null;//(AddEditFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
         if (addEditStudyFragment == null) {
             addEditStudyFragment = AddEditFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), addEditStudyFragment, R.id.contentFrame);
 
+            if (getIntent().hasExtra(AddEditActivity.EXTRA_FOLDER_TITLE)) {
+                String title = getIntent().getStringExtra(EXTRA_FOLDER_TITLE);
+                actionBar.setTitle(title);
+            } else {
+                actionBar.setTitle("Note");
+            }
             if (getIntent().hasExtra(AddEditActivity.EXTRA_FOLDER_ID)) {
                 int folderId = getIntent().getIntExtra(EXTRA_FOLDER_ID, 0);
                 Bundle bundle = new Bundle();
@@ -48,6 +60,7 @@ public class AddEditActivity extends AppCompatActivity {
                 bundle.putString(AddEditFragment.ARGUMENT_TASK_CONTENT, taskContent);
                 addEditStudyFragment.setArguments(bundle);
             }
+
         }
         // Create the presenter
         new AddEditPresenter(addEditStudyFragment, TaskRepository.getInstance(TaskLocalDataSource.getInstance(this)), FolderRepository.getInstance(FolderLocalDataSource.getInstance(this)));

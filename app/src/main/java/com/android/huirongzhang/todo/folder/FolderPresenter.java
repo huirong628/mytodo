@@ -47,7 +47,7 @@ public class FolderPresenter implements FolderContract.Presenter {
 
     @Override
     public void openFolderDetails(Folder clickedFolder) {
-        mView.showFolderDetailsUi(clickedFolder.getId());
+        mView.showFolderDetailsUi(clickedFolder);
     }
 
     @Override

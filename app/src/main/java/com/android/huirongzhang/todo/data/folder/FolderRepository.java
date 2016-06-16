@@ -51,4 +51,9 @@ public class FolderRepository implements FolderDataSource {
     public void deleteFolder(@NonNull List<Folder> folders) {
         mFolderLocalDataSource.deleteFolder(folders);
     }
+
+    @Override
+    public String getFolderTitle(int folderId) {
+        return mFolderLocalDataSource.getFolderTitle(folderId);
+    }
 }

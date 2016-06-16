@@ -17,6 +17,7 @@ import com.android.huirongzhang.todo.data.task.TaskRepository;
 public class TaskActivity extends AppCompatActivity {
 
     public static final String EXTRA_FOLDER_ID = "FOLDER_ID";
+    public static final String EXTRA_FOLDER_TITLE = "FOLDER_TITLE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class TaskActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), taskFragment, R.id.contentFrame);
             if (getIntent().hasExtra(TaskActivity.EXTRA_FOLDER_ID)) {
                 int folderId = getIntent().getIntExtra(EXTRA_FOLDER_ID, 0);
-                String title = "工作";
+                String title = getIntent().getStringExtra(EXTRA_FOLDER_TITLE);
                 actionBar.setTitle(title);
                 Bundle bundle = new Bundle();
                 bundle.putInt(TaskFragment.ARGUMENT_FOLDER_ID, folderId);
@@ -58,7 +59,7 @@ public class TaskActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
+        this.finish();
         return true;
     }
 }

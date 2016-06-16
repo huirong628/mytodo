@@ -109,7 +109,7 @@ public class FolderLocalDataSource implements FolderDataSource {
         if (type == 0) {//0代表删除操作
             values.put(FolderEntry.COLUMN_NAME_COUNT, taskCount);//删除个数问题,重新获取id文件夹下task的数量
         } else {//1代表增加操作
-            values.put(FolderEntry.COLUMN_NAME_COUNT, getFolder(id).getCount() + 1);
+            values.put(FolderEntry.COLUMN_NAME_COUNT, getTaskCount(id) + 1);
         }
         String whereClause = FolderEntry.COLUMN_NAME_ENTRY_ID + "=" + id;
         String[] whereArgs = null;
@@ -132,8 +132,35 @@ public class FolderLocalDataSource implements FolderDataSource {
         db.close();
     }
 
-    private Folder getFolder(int id) {
-        Folder folder = new Folder();
+    @Override
+    public String getFolderTitle(int folderId) {
+        String folderTitle = "";
+        SQLiteDatabase db = mDBHelper.getReadableDatabase();
+
+        String[] projection = {
+                FolderEntry.COLUMN_NAME_TITLE
+        };
+
+        String selection = FolderEntry.COLUMN_NAME_ENTRY_ID + "=?";
+
+        String[] selectionArgs = new String[]{folderId + ""};
+
+        Cursor c = db.query(
+                FolderEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        if (c != null && c.getCount() > 0) {
+            while (c.moveToNext()) {
+                folderTitle = c.getString(c.getColumnIndexOrThrow(FolderEntry.COLUMN_NAME_TITLE));
+            }
+        }
+        if (c != null) {
+            c.close();
+        }
+        return folderTitle;
+    }
+
+    private int getTaskCount(int id) {
+        int taskCount = 0;
         SQLiteDatabase db = mDBHelper.getReadableDatabase();
 
         String[] projection = {
@@ -149,8 +176,7 @@ public class FolderLocalDataSource implements FolderDataSource {
 
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
-                int count = c.getInt(c.getColumnIndexOrThrow(FolderEntry.COLUMN_NAME_COUNT));
-                folder.setCount(count);
+                taskCount = c.getInt(c.getColumnIndexOrThrow(FolderEntry.COLUMN_NAME_COUNT));
             }
         }
         if (c != null) {
@@ -158,7 +184,7 @@ public class FolderLocalDataSource implements FolderDataSource {
         }
 
         // db.close();
-        return folder;
+        return taskCount;
     }
 /**
  * 04-27 14:05:14.114 8111-8111/com.android.huirongzhang.todo E/AndroidRuntime: FATAL EXCEPTION: main

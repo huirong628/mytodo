@@ -221,6 +221,7 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
     public void showAddTask() {
         Intent intent = new Intent(getActivity(), AddEditActivity.class);
         intent.putExtra(AddEditActivity.EXTRA_FOLDER_ID, mFolderId);
+        intent.putExtra(AddEditActivity.EXTRA_FOLDER_TITLE, mPresenter.getFolderTitle(mFolderId));
         startActivityForResult(intent, AddEditActivity.REQUEST_ADD_TASK);
     }
 
@@ -229,6 +230,7 @@ public class TaskFragment extends Fragment implements TaskContract.View, View.On
         Intent intent = new Intent(getActivity(), AddEditActivity.class);
         intent.putExtra(AddEditActivity.EXTRA_TASK_CONTENT, task.getContent());
         intent.putExtra(AddEditActivity.EXTRA_TASK_ID, task.getId());
+        intent.putExtra(AddEditActivity.EXTRA_FOLDER_TITLE, mPresenter.getFolderTitle(task.getType()));
         startActivityForResult(intent, AddEditActivity.REQUEST_UPDATE_TASK);
     }
 

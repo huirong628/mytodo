@@ -33,5 +33,7 @@ public interface TaskContract {
         void openTaskDetails(Task task);
 
         void deleteTask(List<Task> tasks, int folderId);
+
+        String getFolderTitle(int folderId);
     }
 }
