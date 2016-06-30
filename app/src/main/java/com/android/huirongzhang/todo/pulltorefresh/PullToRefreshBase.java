@@ -1074,6 +1074,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
     @SuppressWarnings("deprecation")
     private void init(Context context, AttributeSet attrs) {
+        Log.d(LOG_TAG, "init()");
         switch (getPullToRefreshScrollDirection()) {
             case HORIZONTAL:
                 setOrientation(LinearLayout.HORIZONTAL);

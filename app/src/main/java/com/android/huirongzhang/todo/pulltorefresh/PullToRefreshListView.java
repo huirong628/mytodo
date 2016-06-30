@@ -22,6 +22,7 @@ import android.graphics.Canvas;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +35,8 @@ import com.android.huirongzhang.todo.pulltorefresh.internal.EmptyViewMethodAcces
 import com.android.huirongzhang.todo.pulltorefresh.internal.LoadingLayout;
 
 public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView> {
+
+    private static final String TAG = "PullToRefreshListView";
 
     private LoadingLayout mHeaderLoadingView;
     private LoadingLayout mFooterLoadingView;
@@ -60,11 +63,13 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 
     @Override
     public final Orientation getPullToRefreshScrollDirection() {
+        Log.d(TAG, "getPullToRefreshScrollDirection()");
         return Orientation.VERTICAL;
     }
 
     @Override
     protected void onRefreshing(final boolean doScroll) {
+        Log.d(TAG, "onRefreshing(),doScroll = " + doScroll);
         /**
          * If we're not showing the Refreshing view, or the list is empty, the
          * the header/footer views won't show so we use the normal method.
