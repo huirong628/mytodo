@@ -21,4 +21,6 @@
     <string name="new_folder">新建文件夹</string>
     <string name="enter_a_name_for_this_folder">请为此文件夹输入名称。</string>
     <string name="folder_name">名称</string>
+    <string name="no_task">无备忘录</string>
+    <string name="no_folder">无文件夹</string>
 </resources>
