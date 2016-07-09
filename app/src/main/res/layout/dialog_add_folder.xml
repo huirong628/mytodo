@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="New Folder"
+        android:text="@string/new_folder"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -24,7 +24,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
-        android:text="Enter a name for this folder."
+        android:text="@string/enter_a_name_for_this_folder"
         android:textSize="14sp" />
 
     <EditText
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/dialog_edittext_bg"
-        android:hint="Name"
+        android:hint="@string/folder_name"
         android:padding="2dp"
         android:singleLine="true"
         android:textCursorDrawable="@null" />

@@ -11,10 +11,14 @@
     <string name="title_study_task_delete">Delete</string>
     <string name="save">保存</string>
     <string name="cancel">取消</string>
+
     <!--folder menu-->
     <string name="title_folder_add">新建文件夹</string>
     <string name="title_edit">编辑</string>
     <string name="title_delete">删除</string>
     <string name="title_done">完成</string>
-    <string name="dialog_content">Enter a new name for this folder.</string>
+    <string name="dialog_content">请为此文件夹输入名称。</string>
+    <string name="new_folder">新建文件夹</string>
+    <string name="enter_a_name_for_this_folder">请为此文件夹输入名称。</string>
+    <string name="folder_name">名称</string>
 </resources>

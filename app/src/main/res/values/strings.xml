@@ -18,4 +18,7 @@
     <string name="title_done">Done</string>
     <string name="dialog_content">Enter a new name for this folder.</string>
     <string name="reward_value"><![CDATA[获得<font color="#FE5454">%1$d</font>个赞]]></string>
+    <string name="new_folder">New Folder</string>
+    <string name="enter_a_name_for_this_folder">Enter a name for this folder.</string>
+    <string name="folder_name">Name</string>
 </resources>
