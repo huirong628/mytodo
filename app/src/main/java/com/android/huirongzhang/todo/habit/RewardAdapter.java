@@ -53,7 +53,7 @@ public class RewardAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         viewHolder.dateView.setText("2016/04/16");
-        viewHolder.valueView.setText(Html.fromHtml(mContext.getString(R.string.reward_value, 20)));
+        //viewHolder.valueView.setText(Html.fromHtml(mContext.getString(R.string.reward_value, 20)));
         viewHolder.prizeView.setText("奖励卡车");
         if (i == mDate.length - 1) {
             viewHolder.lineView.setVisibility(View.GONE);
