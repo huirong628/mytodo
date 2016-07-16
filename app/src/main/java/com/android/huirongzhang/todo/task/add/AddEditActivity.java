@@ -13,11 +13,15 @@ import com.android.huirongzhang.todo.data.local.folder.FolderLocalDataSource;
 import com.android.huirongzhang.todo.data.local.task.TaskLocalDataSource;
 import com.android.huirongzhang.todo.data.task.TaskRepository;
 import com.android.huirongzhang.todo.task.TaskFragment;
+import com.qhad.ads.sdk.adcore.Qhad;
+import com.qhad.ads.sdk.interfaces.IQhFloatbannerAd;
 
 /**
  * Created by zhanghuirong on 2016/4/11.
  */
 public class AddEditActivity extends AppCompatActivity {
+
+    final String adSpaceid = "148891";
 
     public static final int REQUEST_ADD_TASK = 1;
     public static final int REQUEST_UPDATE_TASK = 2;
@@ -65,7 +69,7 @@ public class AddEditActivity extends AppCompatActivity {
         }
         // Create the presenter
         new AddEditPresenter(addEditStudyFragment, TaskRepository.getInstance(TaskLocalDataSource.getInstance(this)), FolderRepository.getInstance(FolderLocalDataSource.getInstance(this)));
-
+        IQhFloatbannerAd floatBanner = Qhad.showFloatbannerAd(this, adSpaceid, false, Qhad.FLOAT_BANNER_SIZE.SIZE_DEFAULT, Qhad.FLOAT_LOCATION.BOTTOM);
     }
 
     @Override

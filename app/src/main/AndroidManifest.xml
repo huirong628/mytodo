@@ -4,6 +4,14 @@
     android:versionCode="1"
     android:versionName="1.0.0">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/note"
@@ -23,6 +31,17 @@
         <activity
             android:name=".task.add.AddEditActivity"
             android:exported="false" />
+
+        <!--注册QhAdActivity：-->
+        <activity
+            android:name="com.qhad.ads.sdk.adcore.QhAdActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
+
+        <!--注册QhAdService服务：-->
+        <service
+            android:name="com.qhad.ads.sdk.service.QhAdService"
+            android:enabled="true"
+            android:exported="false"></service>
     </application>
 
 </manifest>

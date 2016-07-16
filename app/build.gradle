@@ -27,4 +27,5 @@ dependencies {
     compile files('src/main/libs/hellocharts-library-1.5.8.jar')
     compile 'com.android.support:recyclerview-v7:23.3.0'
     compile files('src/main/libs/universal-image-loader-1.9.5.jar')
+    compile files('src/main/libs/qhad_0.1.12.1113.jar')
 }
