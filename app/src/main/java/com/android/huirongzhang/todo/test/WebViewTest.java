@@ -2,9 +2,10 @@ package com.android.huirongzhang.todo.test;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,15 +20,18 @@ import com.android.huirongzhang.todo.webview.WebAppInterface;
 
 public class WebViewTest extends Activity {
 
-    private static final String WEB_PAGE = "https://developer.android.com/guide/webapps/webview.html";
+    private static final String WEB_PAGE = "http://fa.163.com/activity/silver/newIndex/wap/sign.do?from=pz360et1";
     private static final String WEB_LIVE = "http://h.huajiao.com/l/index?liveid=sn._LC_RE_non_2497993014745280621098581_SX&author=24979930&userid=24979930&version=4.2.1.1019&time=1474528092&reference=wx&qd=wx&channel=meizu";
 
     private WebView mWebView;
+    private View mLoadingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_web_view);
+
+        mLoadingView = findViewById(R.id.loading_view);
 
         initWebView();
 
@@ -36,13 +40,15 @@ public class WebViewTest extends Activity {
 
     private void initWebView() {
         mWebView = (WebView) findViewById(R.id.web_view);
-        mWebView.loadUrl(WEB_LIVE);
+        mWebView.loadUrl(WEB_PAGE);
         /**
          * Binding JavaScript code to Android code
          */
         mWebView.addJavascriptInterface(new WebAppInterface(this), "Android");
 
         /**
+         * Force links and redirects to open in the WebView instead of in a browser
+         *
          * Handling Page Navigation
          *
          * click urls后不再是启动第三方应用程序来处理;
@@ -67,8 +73,32 @@ public class WebViewTest extends Activity {
 
     private void initWebSettings() {
         WebSettings webSettings = mWebView.getSettings();
+
+        /**
+         * WebViews don't allow JavaScript by default.
+         *
+         * To run a web application in the web view,
+         *
+         * you need to explicitly enable JavaScript
+         *
+         */
         webSettings.setJavaScriptEnabled(true);//enable js
-        //webSettings.setUserAgentString("ua");//custom user agent to verify that the client requesting your web page is actually your Android application.
+
+        /**
+         * ua 用处：
+         *
+         * 1.WebView中设置ua是为了验证是android app中的WebView发出的请求
+         *
+         * 2.普通的请求设置ua,是服务端为了验证安全性，同时出问题时便于查询哪个版本导致的。
+         *
+         * 3.custom user agent to verify that the client requesting your web page is actually your Android application.
+         *
+         * 4.then query the custom user agent in your web page to verify that the client requesting your web page is actually your Android application.
+         *
+         * 5.If the ua string is null or empty, the system default value will be used
+         *
+         */
+        webSettings.setUserAgentString(null);
 
         //
         webSettings.setDomStorageEnabled(true);
@@ -79,8 +109,6 @@ public class WebViewTest extends Activity {
         webSettings.setUseWideViewPort(true);
         webSettings.setLoadWithOverviewMode(true);
 
-        //webSettings.setUserAgentString("");//
-
         //webSettings.setSaveFormData(true);
 
 
@@ -90,6 +118,16 @@ public class WebViewTest extends Activity {
      * Handling Page Navigation
      */
     private class MyWebViewClient extends WebViewClient {
+
+        /**
+         * This method is called whenever the WebView tries to navigate to a different URL.
+         * <p>
+         * If it returns false, the WebView opens the URL itself.
+         *
+         * @param view
+         * @param url
+         * @return
+         */
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -102,7 +140,7 @@ public class WebViewTest extends Activity {
              * it allows the WebView to load the URL as usual
              *
              */
-            if (url != null && url.startsWith("http://h.huajiao")) {
+            if (url != null && url.startsWith("http:")) {
                 return false;
             }
 
@@ -113,33 +151,28 @@ public class WebViewTest extends Activity {
             startActivity(intent);
             return true;
         }
-    }
 
-    /**
-     * Navigating web page history
-     *
-     * @param keyCode
-     * @param event
-     * @return
-     */
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        /**
-         * 1.判断是否是Back Button
-         *
-         * 2.canGoBack():判断是否有history
-         *
-         */
-        if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
-            mWebView.goBack();
-            return true;
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            mLoadingView.setVisibility(View.VISIBLE);
+            mWebView.setVisibility(View.GONE);
         }
 
-        /**
-         * 如果上面条件都不满足,执行系统默认的。
-         */
-        return super.onKeyDown(keyCode, event);
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            mLoadingView.setVisibility(View.GONE);
+            mWebView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
