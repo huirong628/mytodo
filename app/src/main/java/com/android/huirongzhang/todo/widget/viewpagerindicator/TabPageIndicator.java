@@ -4,7 +4,10 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -16,13 +19,17 @@ import static android.widget.FrameLayout.LayoutParams.*;
  */
 
 public class TabPageIndicator extends HorizontalScrollView implements PageIndicator {
+    private static final String TAG = "TabPageIndicator";
 
     private final IcsLinearLayout mTabLayout;
 
     private ViewPager mViewPager;
+    private ViewPager.OnPageChangeListener mListener;
 
     private int mMaxTabWidth;
     private int mSelectedTabIndex;
+
+    private VelocityTracker mVelocityTracker;
 
     public TabPageIndicator(Context context) {
         this(context, null);
@@ -53,7 +60,9 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
      */
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+        if (mListener != null) {
+            mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+        }
     }
 
     /**
@@ -79,7 +88,9 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
      */
     @Override
     public void onPageScrollStateChanged(int state) {
-
+        if (mListener != null) {
+            mListener.onPageScrollStateChanged(state);
+        }
     }
 
     /**
@@ -98,7 +109,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         }
 
         mViewPager = viewPager;
-        viewPager.setOnPageChangeListener(this);
+        //viewPager.setOnPageChangeListener(this);
         notifyDataSetChanged();
     }
 
@@ -116,7 +127,8 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         mViewPager.setCurrentItem(item);
     }
 
-    private void notifyDataSetChanged() {
+    @Override
+    public void notifyDataSetChanged() {
         mTabLayout.removeAllViews();
         PagerAdapter adapter = mViewPager.getAdapter();
         final int count = adapter.getCount();
@@ -126,6 +138,16 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         }
         setCurrentItem(mSelectedTabIndex);
         requestLayout();
+    }
+
+    /**
+     * Set a page listener which will receive forward events.
+     *
+     * @param listener
+     */
+    @Override
+    public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
+        mListener = listener;
     }
 
     private void addTab(int position, CharSequence title) {
@@ -149,4 +171,17 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
             }
         }
     };
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        if (mVelocityTracker == null) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
+        mVelocityTracker.addMovement(ev);
+        mVelocityTracker.computeCurrentVelocity(1000);
+        int xVelocity = (int) mVelocityTracker.getXVelocity();
+        int yVelocity = (int) mVelocityTracker.getYVelocity();
+        Log.d(TAG, "xVelocity = " + xVelocity + ",yVelocity = " + yVelocity);
+        return super.onTouchEvent(ev);
+    }
 }
