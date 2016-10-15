@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -49,6 +50,10 @@ public class LoadingView extends View {
     private Paint outerPaint;
     private Paint fanPaint;
     private Paint fanBgPaint;
+
+    //电风扇 扇叶路径
+    private Path mPath;
+    private Path nPath;
 
     public LoadingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -107,6 +112,18 @@ public class LoadingView extends View {
 
         fanWhiteRect = new RectF(7 * outerRadius, outerRadius, 9 * outerRadius, outerRadius * 3);
         fanBgRadius = outerRadius * 0.8f;
+
+        mPath = new Path();
+
+        nPath = new Path();
+        //右边的路径
+        mPath.moveTo(8 * outerRadius, fanBgRadius);
+        mPath.cubicTo(8 * outerRadius + fanBgRadius / 3 * 2, fanBgRadius / 8 * 7, 8 * outerRadius + fanBgRadius / 10, fanBgRadius / 10, 8 * outerRadius, 7);
+
+        //左边的路径
+        nPath.moveTo(8 * outerRadius, fanBgRadius);
+        nPath.cubicTo(8 * outerRadius - fanBgRadius / 3 * 2, fanBgRadius / 8 * 7, 8 * outerRadius - fanBgRadius / 10, fanBgRadius / 10, 8 * outerRadius, 7);
+        mPath.addPath(nPath);
     }
 
     /**
@@ -135,6 +152,25 @@ public class LoadingView extends View {
         canvas.save();
         canvas.scale(0.9f, 0.9f, 8 * outerRadius, 2 * outerRadius);
         canvas.drawArc(fanWhiteRect, 90, 360, true, fanBgPaint);
+        canvas.restore();
+
+
+        //移动到圆的中心
+        canvas.translate(0, 2 * outerRadius);
+
+        //画风扇页
+        canvas.save();
+        drawFan(canvas, true);
+        canvas.restore();
+
+    }
+
+    private void drawFan(Canvas canvas, boolean isNeedRotate) {
+        canvas.save();
+        for (float i = 0; i <= 270; i = i + 90) {
+            canvas.rotate(i, 8 * outerRadius, 0);
+            canvas.drawPath(mPath, fanPaint);
+        }
         canvas.restore();
     }
 
