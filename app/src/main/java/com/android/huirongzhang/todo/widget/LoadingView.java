@@ -14,6 +14,7 @@ import android.view.View;
 import java.lang.ref.WeakReference;
 
 import static android.view.View.MeasureSpec.AT_MOST;
+import static android.view.View.MeasureSpec.EXACTLY;
 
 /**
  * Created by HuirongZhang on 2016/10/9.
@@ -81,22 +82,40 @@ public class LoadingView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         Log.d(TAG, "onMeasure()");
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
-        int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
 
+        setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
+    }
+
+    private int measureWidth(int widthMeasureSpec) {
+        int resultWidth;
+        int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+
+        if (widthSpecMode == EXACTLY) {
+            resultWidth = widthSize;
+        } else {
+            resultWidth = DEFAULT_WIDTH;
+            if (widthSpecMode == AT_MOST) {
+                resultWidth = Math.min(widthSize, DEFAULT_WIDTH);
+            }
+        }
+        return resultWidth;
+    }
+
+    private int measureHeight(int heightMeasureSpec) {
+        int resultHeight;
+        int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
-        //对应wrap_content
-        if (widthSpecMode == AT_MOST) {
-            widthSize = Math.min(widthSize, DEFAULT_WIDTH);
+        if (heightSpecMode == EXACTLY) {
+            resultHeight = heightSize;
+        } else {
+            resultHeight = DEFAULT_HEIGHT;
+            if (heightSpecMode == AT_MOST) {
+                resultHeight = Math.min(heightSize, DEFAULT_HEIGHT);
+            }
         }
-
-        if (heightSpecMode == AT_MOST) {
-            heightSize = Math.min(heightSize, DEFAULT_HEIGHT);
-        }
-
-        setMeasuredDimension(widthSize, heightSize);
+        return resultHeight;
     }
 
     @Override
