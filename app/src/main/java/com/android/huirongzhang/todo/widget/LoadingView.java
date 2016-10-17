@@ -1,5 +1,6 @@
 package com.android.huirongzhang.todo.widget;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -10,6 +11,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 
 import java.lang.ref.WeakReference;
 
@@ -56,8 +58,24 @@ public class LoadingView extends View {
     private Path mPath;
     private Path nPath;
 
+    // 定义结束的属性动画
+    private ValueAnimator progressAnimator;
+    private ValueAnimator completedAnimator;
+
+    //进度值
+    private float maxProgress = 100;
+    private float currentProgress;
+    private float completedProgress;
+
+    //计算时间增量和progress增量
+    private long preTime;
+    private long addTime;
+    private float addProgress;
+    private float preProgress;
+
     public LoadingView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initValueAnimator();
         init();
     }
 
@@ -73,6 +91,42 @@ public class LoadingView extends View {
 
         fanBgPaint = new Paint(fanPaint);
         fanBgPaint.setColor(Color.parseColor(DEFAULT_BG_FAN));
+
+        preTime = System.currentTimeMillis();
+    }
+
+    private void initValueAnimator() {
+        progressAnimator = ValueAnimator.ofFloat(0, 1);
+        progressAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                currentProgress = preProgress + addProgress * (float) animation.getAnimatedValue();
+            }
+        });
+
+        completedAnimator = ValueAnimator.ofFloat(0, 1);
+        completedAnimator.setDuration(500);
+        completedAnimator.setInterpolator(new AccelerateInterpolator());
+        completedAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                completedProgress = (float) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+    }
+
+    public void setCurrentProgress(int currentProgress) {
+        addProgress = currentProgress / maxProgress - this.currentProgress;
+        preProgress = this.currentProgress;
+        long leftTime = 0;
+        if (progressAnimator.getCurrentPlayTime() < addTime) {
+            leftTime = addTime - progressAnimator.getCurrentPlayTime();
+        }
+        addTime = System.currentTimeMillis() - preTime + leftTime;
+        preTime = System.currentTimeMillis();
+        progressAnimator.setDuration(500);
+        progressAnimator.start();
     }
 
     /**
@@ -160,6 +214,7 @@ public class LoadingView extends View {
             outBorderBitmap = getBitmap();
             outBorderBitmapCache = new WeakReference<Bitmap>(outBorderBitmap);
         }
+        //canvas和outBorderBitmap联系在一起，outBorderBitmap保存绘制在Canvas上的像素信息。
         canvas.drawBitmap(outBorderBitmap, 0, 0, outerPaint);
 
         drawInnerCircle(canvas);
@@ -182,10 +237,14 @@ public class LoadingView extends View {
         drawFan(canvas, true);
         canvas.restore();
 
+        invalidate();
     }
 
     private void drawFan(Canvas canvas, boolean isNeedRotate) {
         canvas.save();
+        if (isNeedRotate) {
+            canvas.rotate(currentProgress * 360 * 5, 8 * outerRadius, 0);
+        }
         for (float i = 0; i <= 270; i = i + 90) {
             canvas.rotate(i, 8 * outerRadius, 0);
             canvas.drawPath(mPath, fanPaint);
