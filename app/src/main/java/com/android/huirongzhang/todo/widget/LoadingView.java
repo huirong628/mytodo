@@ -137,9 +137,17 @@ public class LoadingView extends View {
         Log.d(TAG, "onMeasure()");
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
+        /**
+         * 系统最终会调用该方法将测量后的宽和高设置进去
+         */
         setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
     }
 
+    /**
+     *
+     * @param widthMeasureSpec 包含具体的测量模式和大小这些信息
+     * @return View最后想要绘制的宽值
+     */
     private int measureWidth(int widthMeasureSpec) {
         int resultWidth;
         int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
