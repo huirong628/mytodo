@@ -1,63 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.huirongzhang.todo"
-    android:versionCode="2"
-    android:versionName="1.0.1">
+		  package="com.android.huirongzhang.todo"
+		  android:versionCode="2"
+		  android:versionName="1.0.1">
 
-    <uses-sdk android:minSdkVersion="15" />
+	<uses-sdk android:minSdkVersion="15"/>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.GET_TASKS"/>
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/note"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".test.LoadingViewTest">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+	<application
+		android:allowBackup="true"
+		android:icon="@drawable/note"
+		android:label="@string/app_name"
+		android:supportsRtl="true"
+		android:theme="@style/AppTheme">
+		<activity android:name=".service.wifi.WifiActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".live.KeepLiveActivity"
-            android:excludeFromRecents="true"
-            android:exported="false"
-            android:finishOnTaskLaunch="false"
-            android:launchMode="singleInstance"
-            android:process=":live"
-            android:theme="@style/LiveActivityStyle"></activity>
-        <activity
-            android:name=".task.TaskActivity"
-            android:exported="false" />
-        <activity
-            android:name=".task.add.AddEditActivity"
-            android:exported="false" />
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+		<activity
+			android:name=".service.task.TaskActivity"
+			android:exported="false"/>
+		<activity
+			android:name=".service.task.add.AddEditActivity"
+			android:exported="false"/>
 
-        <!--注册QhAdActivity：-->
-        <activity
-            android:name="com.qhad.ads.sdk.adcore.QhAdActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
+		<!--注册QhAdActivity：-->
+		<activity
+			android:name="com.qhad.ads.sdk.adcore.QhAdActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden"></activity>
 
-        <!--注册QhAdService服务：-->
-        <service
-            android:name="com.qhad.ads.sdk.service.QhAdService"
-            android:enabled="true"
-            android:exported="false"></service>
+		<!--注册QhAdService服务：-->
+		<service
+			android:name="com.qhad.ads.sdk.service.QhAdService"
+			android:enabled="true"
+			android:exported="false"></service>
 
-        <receiver android:name=".receiver.NetworkReceiver">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-    </application>
+		<receiver android:name=".service.receiver.NetworkReceiver">
+			<intent-filter>
+				<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+			</intent-filter>
+		</receiver>
+
+		<service
+			android:name=".service.RemoteService"
+			android:process=":remote"/>
+	</application>
 
 </manifest>
