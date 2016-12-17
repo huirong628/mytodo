@@ -2,6 +2,7 @@ package com.android.huirongzhang.todo.widget;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 
@@ -17,9 +19,14 @@ import java.lang.ref.WeakReference;
 
 import static android.view.View.MeasureSpec.AT_MOST;
 import static android.view.View.MeasureSpec.EXACTLY;
+import static android.view.View.MeasureSpec.UNSPECIFIED;
 
 /**
  * Created by HuirongZhang on 2016/10/9.
+ * <p>
+ * 自定义控件的方式之一：
+ * <p>
+ * 通过重写View来实现全新的控件
  */
 
 public class LoadingView extends View {
@@ -73,8 +80,46 @@ public class LoadingView extends View {
     private float addProgress;
     private float preProgress;
 
+    /**
+     * Simple constructor to use when creating a view from code.
+     *
+     * @param context
+     */
+    public LoadingView(Context context) {
+        this(context, null);
+    }
+
+    /**
+     * Constructor that is called when inflating a view from XML.
+     * <p>
+     * 解析android自带的属性
+     *
+     * @param context
+     * @param attrs
+     */
     public LoadingView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
+    }
+
+    /**
+     * 解析自定义的属性
+     *
+     * @param context
+     * @param attrs        The attribute of the XML tag that is inflating the view.
+     * @param defStyleAttr An attribute in the current theme that contains a
+     *                     reference to a style resource that supplies default values for
+     *                     the view.
+     */
+    public LoadingView(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public LoadingView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+
+        final Resources.Theme theme = context.getTheme();
+//        TypedArray a = theme.obtainStyledAttributes(attrs, R.style.LoadingViewAppearance, defStyleAttr, defStyleRes);
+
         initValueAnimator();
         init();
     }
@@ -140,44 +185,34 @@ public class LoadingView extends View {
         /**
          * 系统最终会调用该方法将测量后的宽和高设置进去
          */
-        setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
+
+        setMeasuredDimension(getMeasuredSize(getSuggestedDefaultWidth(), widthMeasureSpec), getMeasuredSize(getSuggestedDefaultHeight(), heightMeasureSpec));
     }
 
-    /**
-     *
-     * @param widthMeasureSpec 包含具体的测量模式和大小这些信息
-     * @return View最后想要绘制的宽值
-     */
-    private int measureWidth(int widthMeasureSpec) {
-        int resultWidth;
-        int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-
-        if (widthSpecMode == EXACTLY) {
-            resultWidth = widthSize;
-        } else {
-            resultWidth = DEFAULT_WIDTH;
-            if (widthSpecMode == AT_MOST) {
-                resultWidth = Math.min(widthSize, DEFAULT_WIDTH);
-            }
-        }
-        return resultWidth;
+    private int getSuggestedDefaultWidth() {
+        return DEFAULT_WIDTH;
     }
 
-    private int measureHeight(int heightMeasureSpec) {
-        int resultHeight;
-        int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+    private int getSuggestedDefaultHeight() {
+        return DEFAULT_HEIGHT;
+    }
 
-        if (heightSpecMode == EXACTLY) {
-            resultHeight = heightSize;
-        } else {
-            resultHeight = DEFAULT_HEIGHT;
-            if (heightSpecMode == AT_MOST) {
-                resultHeight = Math.min(heightSize, DEFAULT_HEIGHT);
-            }
+    private int getMeasuredSize(int size, int measureSpec) {
+        int result = size;
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+        switch (specMode) {
+            case UNSPECIFIED:
+                result = size;
+                break;
+            case EXACTLY:
+                result = specSize;
+                break;
+            case AT_MOST:
+                result = Math.min(size, specSize);
+                break;
         }
-        return resultHeight;
+        return result;
     }
 
     @Override
@@ -209,6 +244,8 @@ public class LoadingView extends View {
 
     /**
      * 1.先从缓存中取，如果有直接取出来用，如果没有则新建并放入缓存中。
+     * <p>
+     * 绘制控件
      *
      * @param canvas
      */
@@ -274,5 +311,16 @@ public class LoadingView extends View {
 
     private void drawInnerCircle(Canvas canvas) {
 
+    }
+
+    /**
+     * 实现交互逻辑
+     *
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return super.onTouchEvent(event);
     }
 }
