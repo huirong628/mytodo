@@ -27,6 +27,18 @@ public class JavaPassTest {
         change(num);
         System.out.println(num);//10
 
+        //test String,If we need a string that can be modified, we will need StringBuffer or StringBuilder.
+        String str1 = "ab";
+        String str2 = str1;
+        str1.concat("ef");
+        str2.concat("gh");
+        change(str1);
+        System.out.println(str1);//ab
+    }
+
+
+    void change(String str) {
+        str = "cd";
     }
 
     /**
