@@ -29,23 +29,42 @@ import android.view.animation.DecelerateInterpolator;
 public class SlideUp implements View.OnTouchListener, ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
 
     private static final String TAG = SlideUp.class.getSimpleName();
+
     /**
-     * SlideUpView所在的容器
+     * 显示动画效果的View
      */
     private View mView;
 
+    /**
+     * View的高度
+     */
     private float mViewHeight;
 
+    /**
+     * 设置动画的长度
+     */
     private int mSlideDuration = 300;
 
     private boolean mHidden;//默认为false
-
+    /**
+     * the original raw Y coordinate of this event.
+     * <p>
+     * 是相对于屏幕的起始触摸位置
+     */
     private float mTouchStartPosition;
-
+    /**
+     * 相对于View's Top的偏移量
+     */
     private float mViewStartPosition;
 
+    /**
+     * 是否可以滑动
+     */
     private boolean mCanSlide = true;
 
+    /**
+     * 动画的目标位置
+     */
     private float mSlideAnimateTo;
 
     private float mTouchableTop;
