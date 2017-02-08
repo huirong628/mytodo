@@ -67,7 +67,7 @@
         <attr name="ptrScrollingWhileRefreshingEnabled" format="reference|boolean" />
 
         <!--
-        	Whether PullToRefreshListView has it's extras enabled. This allows the user to be 
+        	Whether PullToRefreshListView has it's extras enabled. This allows the user to be
         	able to scroll while refreshing, and behaves better. It acheives this by adding
         	Header and/or Footer Views to the ListView.
         -->
@@ -84,5 +84,8 @@
         <attr name="ptrDrawableTop" format="reference" />
         <attr name="ptrDrawableBottom" format="reference" />
     </declare-styleable>
-
+    <!--自定义属性-->
+    <declare-styleable name="PieChartAppearance">
+        <attr name="visible" format="boolean"/>
+    </declare-styleable>
 </resources>
