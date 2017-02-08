@@ -1,0 +1,67 @@
+View的绘制流程：
+
+1.自定义View
+[1]Creating a View class(继承自View or ViewGroup or API中的控件)(利用base classes and XML tags)
+[2]Custom Drawing(利用android绘图API)
+[3]Making the View Interactive（how to use gesture detection, physics, and animation ）
+[4]Optimizing the View
+
+
+封装后功能强大，简单易用，可以有效利用CPU和Memory。
+
+	public PieChart(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+		super(context, attrs, defStyleAttr, defStyleRes);
+	}
+
+1.定义自定义属性：
+添加文件：res/values/attrs.xml
+<resources>
+    <!--自定义属性-->
+	<declare-styleable name="PieChart">
+		<attr name="visible" format="boolean"/>
+	</declare-styleable>
+</resources>
+
+布局文件：
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  xmlns:custom="http://schemas.android.com/apk/res-auto"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+			  android:gravity="center"
+			  android:orientation="vertical">
+
+	<com.android.huirongzhang.todo.widget.PieChart
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		custom:visible="true"/>
+
+</LinearLayout>
+
+2.使用自定义属性：
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PieChartAppearance, defStyleAttr, defStyleRes);
+		boolean mVisible = a.getBoolean(R.styleable.PieChartAppearance_visible, false);
+		a.recycle();
+
+
+[2]自定义绘制
+
+重写onDraw()方法；
+工具：Canvas,Paint
+Canvas:决定画什么，如：提供方法画线条，即决定在屏幕上画的形状。
+Paint:决定如何画，如：提供方法决定线条的颜色，即决定color, style, font
+
+invalidate();
+->view属性变化导致外观变化，
+->This must be called from a UI thread. To call from a non-UI thread, call postInvalidate().
+
+requestLayout();->布局属性变化
+确保显示的视图是正确的
+
+
+
+
+
+
+
+
