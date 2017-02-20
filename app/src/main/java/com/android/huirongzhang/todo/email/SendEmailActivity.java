@@ -2,24 +2,22 @@ package com.android.huirongzhang.todo.email;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import com.android.huirongzhang.todo.R;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 
-public class SendEmailActivity extends Activity  {
+public class SendEmailActivity extends Activity implements View.OnClickListener {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.send_email_activity);
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				//sendEmailFrom163();
-			}
-		}).start();
-
-		new SendThread().start();
+		setContentView(R.layout.send_email_activity);
+		Button send = (Button) findViewById(R.id.btn_send_email);
+		send.setOnClickListener(this);
 	}
 
 	private void sendEmailFrom163() {
@@ -30,7 +28,7 @@ public class SendEmailActivity extends Activity  {
 			// 字符编码集的设置
 			email.setCharset("gbk");
 			// 收件人的邮箱
-			email.addTo("879073159@qq.com");
+			email.addTo("zhanghuirong@360.cn");
 			// 发送人的邮箱
 			email.setFrom("13512953107@163.com", "zhanghuirong");
 			// 如果需要认证信息的话，设置认证：用户名-密码。分别为发件人在邮件服务器上的注册名称和密码
@@ -47,20 +45,15 @@ public class SendEmailActivity extends Activity  {
 			System.out.println("邮件发送失败!");
 		}
 	}
+
+
+	@Override
+	public void onClick(View v) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				sendEmailFrom163();
+			}
+		}).start();
+	}
 }
-	/*
-	public boolean isNetworkConnected(Context context)
-    {
-    	if (context != null) 
-    	{
-	    	ConnectivityManager mConnectivityManager = (ConnectivityManager) context
-	    	.getSystemService(Context.CONNECTIVITY_SERVICE);
-	    	NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
-	    	if (mNetworkInfo != null) 
-	    	{
-	    		return mNetworkInfo.isAvailable();
-	    	}
-    	}
-    	return false;
-    	}
-    }*/
