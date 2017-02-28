@@ -19,7 +19,7 @@ public class DonutProgressBarView extends View {
 
 	private static final String TAG = DonutProgressBarView.class.getSimpleName();
 
-	private int min_size = 100;
+	private static final int DEFAULT_MIN_SIZE = 100;
 
 	private final int default_inner_background_color = Color.TRANSPARENT;
 	private final int default_finished_color = Color.rgb(66, 145, 241);
@@ -84,7 +84,10 @@ public class DonutProgressBarView extends View {
 	}
 
 	private int measure(int measureSpec) {
-		int result = (int) (getResources().getDisplayMetrics().density * min_size);//这里要用像素
+		/**
+		 * because the pixel density of  devices varies,you must calculate the actual pixel value using the display density.
+		 */
+		int result = (int) (DEFAULT_MIN_SIZE * getResources().getDisplayMetrics().density);
 		int mode = MeasureSpec.getMode(measureSpec);
 		int size = MeasureSpec.getSize(measureSpec);
 		if (mode == MeasureSpec.EXACTLY) {
@@ -115,6 +118,14 @@ public class DonutProgressBarView extends View {
 		String text = getProgress() + "%";
 		float textHeight = textPaint.descent() + textPaint.ascent();
 		canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2, (getHeight() - textHeight) / 2, textPaint);
+
+		/**
+		 * 下面两个方法一般同时出现，
+		 * save()方法会将当前数据保存在私有栈，之后会调用translate,scale,rotate,skew,concat or clipRect,clipPath 等一系列操作，
+		 *  restore()方法被调用后，会恢复到调用save()之前。
+		 */
+		canvas.save();
+		canvas.restore();
 	}
 
 	private int getStartingDegree() {
